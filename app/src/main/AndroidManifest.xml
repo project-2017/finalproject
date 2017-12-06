@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cst2335.groupproject">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".PkgMain.M_MainPage"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PkgActivity.T_Insert"
+            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".PkgActivity.T_Update" />
+        <activity
+            android:name=".PkgActivity.T_Help"
+            android:excludeFromRecents="true"
+            android:label="@string/tracker_help_title"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".PkgHouse.homeThermo_mainPkg.AddNewTempActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".PkgHouse.homeThermo_mainPkg.fragmentTempPkg.FragmentMainActivity" />
+        <activity android:name=".PkgHouse.adapterPkg.HelpActivity"></activity>
+        <activity android:name=".PkgHouse.homeThermo_mainPkg.HouseThermostatActivity" />
+        <activity android:name=".PkgFood.FoodAdd"></activity>
+        <activity android:name=".PkgFood.FoodList"></activity>
+        <activity android:name=".PkgFood.FoodUpdate"></activity>
+        <activity android:name=".PkgAutomobile.AutomobileDetail" />
+        <activity android:name=".PkgAutomobile.AutomobileEntry" />
+        <activity android:name=".PkgAutomobile.AutomobileMonthlypurchase"></activity>
+        <activity android:name=".PkgAutomobile.AutomobileActivity"></activity>
+    </application>
+
+</manifest>
