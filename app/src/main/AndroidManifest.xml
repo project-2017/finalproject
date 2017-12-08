@@ -20,9 +20,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".PkgActivity.T_Insert"
+            android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".PkgActivity.T_Update" />
+        <activity
             android:name=".PkgActivity.T_Help"
             android:label="@string/tracker_help_title"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Dialog"/>
     </application>
+
 </manifest>
