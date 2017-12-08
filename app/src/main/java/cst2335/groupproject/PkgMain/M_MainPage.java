@@ -1,5 +1,6 @@
 package cst2335.groupproject.PkgMain;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import cst2335.groupproject.PkgActivity.T_Help;
 import cst2335.groupproject.PkgActivity.T_Main;
 import cst2335.groupproject.PkgAutomobile.A_Main;
 import cst2335.groupproject.PkgFood.F_Main;
@@ -85,9 +87,27 @@ public class M_MainPage extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.tracker_menu, menu);
 
+        // Only show menu when using activity tracker
+        String name = sharedPreference.getLayout(this);
+        if (name.equals("T_Fragment_ActivityList") || name.equals("T_Fragment_Dashboard")) {
+            showTrackerHelp(true);
+        } else {
+            showTrackerHelp(false);
+        }
         return true;
+    }
+
+    /**
+     * Function for hiding and showing menu
+     *
+     * @param showMenu The boolean that decide show or hide menu
+     */
+    public void showTrackerHelp(boolean showMenu) {
+        if (menu == null)
+            return;
+        menu.setGroupVisible(R.id.tracker_menu_group, showMenu);
     }
 
     /**
@@ -105,12 +125,14 @@ public class M_MainPage extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         // Menu item help
-        if (id == R.id.main_action_help) {
+        if (id == R.id.tracker_menu_action_help) {
+            Intent intent = new Intent(M_MainPage.this, T_Help.class);
+            startActivity(intent);
             return true;
         }
 
         // Menu item quit
-        if (id == R.id.main_action_quit) {
+        if (id == R.id.tracker_menu_action_quit) {
             finishAffinity();
             return true;
         }
@@ -128,10 +150,12 @@ public class M_MainPage extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        showTrackerHelp(false);
 
         int id = item.getItemId();
 
         if (id == R.id.main_drawer_nav_activity) {
+            showTrackerHelp(true);
             T_Main fragment = new T_Main();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();

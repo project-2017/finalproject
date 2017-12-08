@@ -29,6 +29,9 @@
     <string name="main_menu_house">House Thermostat</string>
     <string name="main_menu_automobile">Automobile</string>
     <string name="overview_title">Overview</string>
-    <string name="main_action_help">Help</string>
-    <string name="main_action_quit">Quit</string>
+    <string name="tracker_action_help">Help</string>
+    <string name="tracker_action_quit">Quit</string>
+    <string name="tracker_help_title">Help</string>
+    <string name="tracker_delete_dialog_ok">OK</string>
+    <string name="tracker_delete_dialog_cancel">Cancel</string>
 </resources>

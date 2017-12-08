@@ -30,6 +30,9 @@
     <string name="main_menu_house">房子恒温器</string>
     <string name="main_menu_automobile">汽车</string>
     <string name="overview_title">概述</string>
-    <string name="main_action_help">帮助</string>
-    <string name="main_action_quit">退出</string>
+    <string name="tracker_action_help">帮助</string>
+    <string name="tracker_action_quit">退出</string>
+    <string name="tracker_help_title">帮助</string>
+    <string name="tracker_delete_dialog_ok">确认</string>
+    <string name="tracker_delete_dialog_cancel">取消</string>
 </resources>
