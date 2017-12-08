@@ -20,27 +20,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PkgActivity.T_Insert"
-            android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".PkgActivity.T_Update" />
-        <activity
-            android:name=".PkgActivity.T_Help"
-            android:excludeFromRecents="true"
-            android:label="@string/tracker_help_title"
-            android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity
             android:name=".PkgHouse.homeThermo_mainPkg.AddNewTempActivity"
             android:configChanges="orientation|keyboardHidden" />
         <activity android:name=".PkgHouse.homeThermo_mainPkg.fragmentTempPkg.FragmentMainActivity" />
         <activity android:name=".PkgHouse.adapterPkg.HelpActivity"></activity>
         <activity android:name=".PkgHouse.homeThermo_mainPkg.HouseThermostatActivity" />
-        <activity android:name=".PkgFood.FoodAdd"></activity>
-        <activity android:name=".PkgFood.FoodList"></activity>
-        <activity android:name=".PkgFood.FoodUpdate"></activity>
-        <activity android:name=".PkgAutomobile.AutomobileDetail" />
-        <activity android:name=".PkgAutomobile.AutomobileEntry" />
-        <activity android:name=".PkgAutomobile.AutomobileMonthlypurchase"></activity>
-        <activity android:name=".PkgAutomobile.AutomobileActivity"></activity>
     </application>
 
 </manifest>

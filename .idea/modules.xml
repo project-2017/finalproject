@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GroupProject.iml" filepath="$PROJECT_DIR$/GroupProject.iml" />
+      <module fileurl="file://C:\Users\cliff\AndroidStudioProjects\finalproject\GroupProject.iml" filepath="C:\Users\cliff\AndroidStudioProjects\finalproject\GroupProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/finalproject.iml" filepath="$PROJECT_DIR$/finalproject.iml" />
     </modules>
   </component>
 </project>

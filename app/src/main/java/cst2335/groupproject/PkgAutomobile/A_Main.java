@@ -1,9 +1,5 @@
 package cst2335.groupproject.PkgAutomobile;
 
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -48,9 +44,6 @@ public class A_Main extends Fragment {
 
         // Set current layout
         sharedPreference.setLayout(view.getContext(), "A_Main");
-
-        Intent intent = new Intent(view.getContext(), AutomobileActivity.class);
-        startActivity(intent);
 
         return view;
     }

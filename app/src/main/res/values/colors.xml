@@ -4,11 +4,4 @@
     <color name="colorPrimaryDark">#616161</color>
     <color name="colorAccent">#ff5252</color>
     <color name="white">#FFFFFF</color>
-
-    <!--Food Nutrition Info Activity color bundle-->
-    <color name="appBackground">#dfdfdf</color>
-    <color name="titleBar">#88bb45</color>
-    <color name="whiteText">#FFFFFF</color>
-    <color name="addButtonColor">#88bb45</color>
-    <color name="deleteButtonColor">#ff552d</color>
 </resources>
