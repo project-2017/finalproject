@@ -34,4 +34,29 @@
     <string name="tracker_help_title">Help</string>
     <string name="tracker_delete_dialog_ok">OK</string>
     <string name="tracker_delete_dialog_cancel">Cancel</string>
+
+
+    <!--Food Nutrition Info Activity string bundle-->
+    <string name="food_item_foodName">Food Name:</string>
+    <string name="food_item_servings">Servings:</string>
+    <string name="food_item_calories">Calories:</string>
+    <string name="food_item_fat">Fat:</string>
+    <string name="food_item_carbohydrate">Carbohydrate:</string>
+    <string name="food_item_date">Date:</string>
+    <string name="food_item_time">Food Name:</string>
+
+    <string name="food_List_listViewTitleBar">Food Item List</string>
+    <string name="food_Add_addTitleBar">What Did You Eat?</string>
+    <string name="food_Update_updateTitleBar">Update Your Food Item</string>
+    <string name="food_Add_empty_warning">Please fill out all fields.</string>
+    <string name="food_Add_serving_warning">Servings must be greater than zero.</string>
+    <string name="food_Add_addButton">Add</string>
+    <string name="food_Add_infoAddSuccessful">Information was added successfully.</string>
+    <string name="food_Add_infoAddUnsuccessful">Failed to add information.</string>
+
+    <string name="food_Update_updateButton">Update</string>
+    <string name="food_Update_deleteButton">Delete</string>
+
+
+    <string name="add_f">Add</string>
 </resources>

@@ -24,5 +24,10 @@
             android:label="@string/tracker_help_title"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Dialog"/>
+
+
+        <activity android:name=".PkgFood.FoodList"></activity>
+        <activity android:name=".PkgFood.FoodAdd"></activity>
+        <activity android:name=".PkgFood.FoodUpdate"></activity>
     </application>
 </manifest>
