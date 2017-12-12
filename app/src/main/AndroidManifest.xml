@@ -24,5 +24,13 @@
             android:label="@string/tracker_help_title"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.AppCompat.Dialog"/>
+
+        <!--automobilt-->
+        <activity android:name=".PkgAutomobile.AutomobileActivity" />
+        <activity android:name=".PkgAutomobile.AutomobileDetail" />
+        <activity android:name=".PkgAutomobile.AutomobileEntry" />
+        <activity android:name=".PkgAutomobile.AutomobileMonthlypurchase"></activity>
+        <!--end of auto-->
+
     </application>
 </manifest>

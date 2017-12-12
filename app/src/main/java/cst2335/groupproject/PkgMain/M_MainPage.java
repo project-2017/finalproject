@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import cst2335.groupproject.PkgActivity.T_Help;
 import cst2335.groupproject.PkgActivity.T_Main;
 import cst2335.groupproject.PkgAutomobile.A_Main;
+import cst2335.groupproject.PkgAutomobile.AutomobileActivity;
 import cst2335.groupproject.PkgFood.F_Main;
 import cst2335.groupproject.PkgHouse.H_Main;
 import cst2335.groupproject.R;
@@ -174,11 +175,13 @@ public class M_MainPage extends AppCompatActivity
             fragmentTransaction.replace(R.id.main_app_bar_container_fragment, fragment);
             fragmentTransaction.commit();
         } else if (id == R.id.main_drawer_nav_automobile) {
-            A_Main fragment = new A_Main();
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_app_bar_container_fragment, fragment);
-            fragmentTransaction.commit();
+            Intent intent = new Intent(this, AutomobileActivity.class);
+            startActivity(intent);
+//            A_Main fragment = new A_Main();
+//            android.support.v4.app.FragmentTransaction fragmentTransaction =
+//                    getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.main_app_bar_container_fragment, fragment);
+//            fragmentTransaction.commit();
         } else if (id == R.id.main_drawer_nav_home) {
             M_Overview fragment = new M_Overview();
             android.support.v4.app.FragmentTransaction fragmentTransaction =

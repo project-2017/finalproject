@@ -1,9 +1,13 @@
 package cst2335.groupproject.PkgAutomobile;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,6 +20,7 @@ import cst2335.groupproject.R;
  */
 public class A_Main extends Fragment {
 
+    private View view;
     /**
      * Using M_SharedPreference
      */
@@ -40,13 +45,38 @@ public class A_Main extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.automobile_main, container, false);
+//        view = inflater.inflate(R.layout.automobile_main, container, false);
 
         // Set current layout
-        sharedPreference.setLayout(view.getContext(), "A_Main");
+//        sharedPreference.setLayout(view.getContext(), "A_Main");
 
-        return view;
+        Intent intent = new Intent(view.getContext(), AutomobileActivity.class);
+        startActivity(intent);
+        return null;
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
+        builder1.setTitle("Do you want to enter?");
+        // Add the buttons
+        builder1.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(view.getContext(), AutomobileActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder1.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        // Create the AlertDialog
+        AlertDialog dialog1 = builder1.create();
+        dialog1.show();
+        return true;
+    }
+
 
     /**
      * On resume
