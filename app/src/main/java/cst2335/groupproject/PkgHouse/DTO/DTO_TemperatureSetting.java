@@ -1,5 +1,6 @@
 package cst2335.groupproject.PkgHouse.DTO;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,7 +16,7 @@ import java.util.Locale;
  * Created by H.LIU on 2017-11-08.
  */
 
-public class DTO_TemperatureSetting extends AppCompatActivity implements Comparable, Serializable {
+public class DTO_TemperatureSetting extends Activity implements Comparable, Serializable {
 
     private String dayOfWeek;
     private String timeOfDay;

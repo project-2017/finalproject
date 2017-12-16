@@ -3,7 +3,9 @@ package cst2335.groupproject.PkgHouse.homeThermo_mainPkg;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cst2335.groupproject.PkgHouse.DAO.H_DatabaseHelper;
 import cst2335.groupproject.PkgHouse.DTO.DTO_TemperatureSetting;
 import cst2335.groupproject.PkgHouse.adapterPkg.HelpActivity;
 import cst2335.groupproject.PkgHouse.adapterPkg.TempSetting_Adapter;
@@ -54,6 +57,8 @@ public class HouseThermostatActivity extends Activity {
     private FloatingActionButton floatingActionButton;
     private BottomNavigationView bottomNavigationView;
 
+    private H_DatabaseHelper databaseHelper;
+
 
     //    private String[] stringList = {"12", "32"};
 //    private ArrayAdapter<String> stringArrayAdapter;
@@ -76,13 +81,17 @@ public class HouseThermostatActivity extends Activity {
 
         listView = findViewById(R.id.listView_tempList_h);
 
+        listTemperature = new TreeMap<>();
+
         floatingActionButton = findViewById(R.id.button_addNewTemp_h);
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigationBar_help_h);
 
         arrayListString_listView = new ArrayList<>();
 
-//        listTemperature = new TreeMap<>();
+        databaseHelper = new H_DatabaseHelper(this);
+        databaseHelper.openDatabase();
 
+//        listTemperature = new TreeMap<>();
 
 
 //        arrayListString_listView.add("22");
@@ -92,7 +101,10 @@ public class HouseThermostatActivity extends Activity {
         tempSetting_adapter = new TempSetting_Adapter(this, arrayListString_listView);
         listView.setAdapter(tempSetting_adapter);
 //---------------------------------------------------------
-        listTemperature = read_sharedPre();
+//        listTemperature = read_sharedPre();
+//        listTemperature = read_database();
+        ReadDatabase readDatabase = new ReadDatabase();
+        readDatabase.execute(listTemperature);
 //        if(listTemperature != null){
 //
 //        }
@@ -119,9 +131,6 @@ public class HouseThermostatActivity extends Activity {
         } else {
 
         }
-
-
-
 
 
 //        //---------------listview setup
@@ -202,6 +211,11 @@ public class HouseThermostatActivity extends Activity {
                 listTemperature = new TreeMap<>((Map<Integer, Double>) data.getExtras().get("treeMap"));
                 int time_return = data.getIntExtra("newItem_time", 0);
                 double temp_return = data.getDoubleExtra("newItem_temp", -900);
+                DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
+                newTemp.setTemp(temp_return);
+                newTemp.setTimeOfWeek(time_return);
+
+                databaseHelper.insert(time_return, newTemp.toString());
                 Toast.makeText(getApplicationContext(), "New Temperature rule is added: \n" + (new DTO_TemperatureSetting(time_return, temp_return)).toString(), Toast.LENGTH_LONG)
                         .show();
 
@@ -217,12 +231,17 @@ public class HouseThermostatActivity extends Activity {
             if (resultCode == Activity.RESULT_OK) {
                 listTemperature = new TreeMap<>((Map<Integer, Double>) data.getExtras().get("treeMap"));
 
+                DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
+                newTemp.setTemp(temp_return);
+                newTemp.setTimeOfWeek(time_return);
+                databaseHelper.insert(time_return, newTemp.toString());
                 Toast.makeText(getApplicationContext(), "New Temperature rule is edited/saved: \n" + (new DTO_TemperatureSetting(time_return, temp_return)).toString(), Toast.LENGTH_LONG)
                         .show();
 
 //                updateListView_toolbar();
             } else if (resultCode == DELETE_ITEM) {
                 listTemperature.remove(time_return);
+                databaseHelper.delete(time_return);
 
 //                Toast.makeText(getApplicationContext(), "Old Temperature rule is deleted: \n" + (new DTO_TemperatureSetting(time_return, temp_return)).toString(), Toast.LENGTH_LONG)
 //                        .show();
@@ -244,10 +263,12 @@ public class HouseThermostatActivity extends Activity {
     private void write_sharedPre(TreeMap<Integer, Double> treeMapIn) {
         SharedPreferences sharedPreferences = getSharedPreferences(STORED_TREE_MAP, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
         Set<String> treeSet = new TreeSet<>();
 
 //        Log.i("test write ", " test write start" );
-        if(treeMapIn ==null){
+        if (treeMapIn == null) {
             return;
         }
         DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
@@ -307,6 +328,11 @@ public class HouseThermostatActivity extends Activity {
         if (!arrayListString_listView.isEmpty()) {
             arrayListString_listView.clear();
         }
+        if (listTemperature == null) {
+
+        }
+
+
         // testing display to the window
         DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
         for (Map.Entry<Integer, Double> entry : listTemperature.entrySet()) {
@@ -368,7 +394,117 @@ public class HouseThermostatActivity extends Activity {
         super.onDestroy();
 
         write_sharedPre(listTemperature);
+//        write_database(listTemperature);
+//        WriteDatabase writeDatabase = new WriteDatabase();
+//        writeDatabase.execute(listTemperature);
+        databaseHelper.closeDatabase();
     }
+
+//    private TreeMap<Integer, Double> read_database() {
+//        TreeMap<Integer, Double> treeMap = new TreeMap<>();
+//
+//        Cursor cursor = databaseHelper.read();
+//        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+//            String treeStr = cursor.getString(cursor.getColumnIndex(databaseHelper.COLUMN_ITEM));
+//            DTO_TemperatureSetting obj = new DTO_TemperatureSetting(treeStr);
+//            treeMap.put(obj.getTimeOfWeek(), obj.getTemp());
+//        }
+//
+//        return treeMap;
+//    }
+
+    public class ReadDatabase extends AsyncTask<TreeMap<Integer, Double>, String, TreeMap<Integer, Double>> {
+        private DTO_TemperatureSetting obj;
+        private TreeMap<Integer, Double> treeMapTemp = new TreeMap<>();
+
+        public ReadDatabase() {
+        }
+
+        @Override
+        protected TreeMap<Integer, Double> doInBackground(TreeMap<Integer, Double>[] treeMaps) {
+            try {
+                treeMapTemp = treeMaps[0];
+                Cursor cursor = databaseHelper.read();
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    String string = cursor.getString(cursor.getColumnIndex(databaseHelper.COLUMN_ITEM));
+                    publishProgress(string);
+                }
+            } catch (Exception e) {
+
+            }
+            return treeMaps[0];
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+//            Log.i("Update","OnProgressUpdate " + values[0]);
+            obj = new DTO_TemperatureSetting(values[0]);
+            treeMapTemp.put(obj.getTimeOfWeek(), obj.getTemp());
+//            double d = listTemperature.get(obj.getTimeOfWeek());
+//            Log.i("Update","OnProgressUpdate " + d);
+            updateListView_toolbar();
+        }
+
+//        @Override
+//        protected void onPostExecute(TreeMap<Integer, Double> treeMap) {
+//            updateListView_toolbar();
+//        }
+    }
+
+//    private void write_database(TreeMap<Integer, Double> treeMapIn) {
+//        databaseHelper.clear();
+//        if (treeMapIn == null) {
+//            return;
+//        }
+//        DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
+//        for (Map.Entry<Integer, Double> entry : treeMapIn.entrySet()) {
+//            Integer time_key = entry.getKey();
+//            Double temp = entry.getValue();
+//            newTemp.setTemp(temp);
+//            newTemp.setTimeOfWeek(time_key);
+//
+//            databaseHelper.insert(newTemp.toString());
+//        }
+//
+//
+//    }
+
+//    public class WriteDatabase extends AsyncTask<TreeMap<Integer, Double>, TreeMap<Integer, Double>, TreeMap<Integer, Double>> {
+//        private Integer time_key;
+//        private Double temp;
+//        @Override
+//        protected TreeMap<Integer, Double> doInBackground(TreeMap<Integer, Double>[] treeMaps) {
+//            try {
+//                databaseHelper.clear();
+//                if (treeMaps[0] == null) {
+//                    return null;
+//                }
+//
+//                for (Map.Entry<Integer, Double> entry : treeMaps[0].entrySet()) {
+//                    time_key = entry.getKey();
+//                    temp = entry.getValue();
+//                    publishProgress();
+//                }
+//            } catch (Exception ex) {
+//
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(TreeMap<Integer, Double> treeMap) {
+//            databaseHelper.closeDatabase();
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(TreeMap<Integer, Double>[] values) {
+//            DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
+//            newTemp.setTemp(temp);
+//            newTemp.setTimeOfWeek(time_key);
+//
+//            databaseHelper.insert(newTemp.toString());
+//        }
+//    }
 
 }// end of class
 
