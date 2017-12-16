@@ -224,11 +224,12 @@ public class HouseThermostatActivity extends Activity {
             }// end if
         } else if (requestCode == EDIT_TEMP_REQUEST_CODE) {
 
-            int time_return = data.getIntExtra("newItem_time", 0);
-            double temp_return = data.getDoubleExtra("newItem_temp", -900);
+
 
             // same code as before
             if (resultCode == Activity.RESULT_OK) {
+                int time_return = data.getIntExtra("newItem_time", 0);
+                double temp_return = data.getDoubleExtra("newItem_temp", -900);
                 listTemperature = new TreeMap<>((Map<Integer, Double>) data.getExtras().get("treeMap"));
 
                 DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
@@ -240,6 +241,8 @@ public class HouseThermostatActivity extends Activity {
 
 //                updateListView_toolbar();
             } else if (resultCode == DELETE_ITEM) {
+                int time_return = data.getIntExtra("newItem_time", 0);
+                double temp_return = data.getDoubleExtra("newItem_temp", -900);
                 listTemperature.remove(time_return);
                 databaseHelper.delete(time_return);
 
@@ -259,7 +262,6 @@ public class HouseThermostatActivity extends Activity {
 
 //            listTemperature = read_sharedPre();
     }//end of method
-
     private void write_sharedPre(TreeMap<Integer, Double> treeMapIn) {
         SharedPreferences sharedPreferences = getSharedPreferences(STORED_TREE_MAP, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
