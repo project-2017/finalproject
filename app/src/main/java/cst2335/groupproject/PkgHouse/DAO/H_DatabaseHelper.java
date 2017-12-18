@@ -88,5 +88,18 @@ public class H_DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(database);
     }
+
+    public boolean exist(int time){
+        int count = 0;
+        Cursor cur = database.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + COLUMN_TIME + " = " + time, null);
+        if (cur.moveToFirst()) {
+            count = cur.getInt(0);
+        }
+        if(count > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
 

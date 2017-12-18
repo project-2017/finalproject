@@ -203,6 +203,18 @@ public class HouseThermostatActivity extends Activity {
 
     }// end  method
 
+    private void changeDatabase(int time, double temp){
+        DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
+        newTemp.setTemp(temp);
+        newTemp.setTimeOfWeek(time);
+
+        if(databaseHelper.exist(time)){
+            databaseHelper.update(time, newTemp.toString());
+        }else{
+            databaseHelper.insert(time, newTemp.toString());
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ADD_TEMP_REQUEST_CODE) {
@@ -211,11 +223,9 @@ public class HouseThermostatActivity extends Activity {
                 listTemperature = new TreeMap<>((Map<Integer, Double>) data.getExtras().get("treeMap"));
                 int time_return = data.getIntExtra("newItem_time", 0);
                 double temp_return = data.getDoubleExtra("newItem_temp", -900);
-                DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
-                newTemp.setTemp(temp_return);
-                newTemp.setTimeOfWeek(time_return);
 
-                databaseHelper.insert(time_return, newTemp.toString());
+                changeDatabase(time_return,temp_return);
+
                 Toast.makeText(getApplicationContext(), "New Temperature rule is added: \n" + (new DTO_TemperatureSetting(time_return, temp_return)).toString(), Toast.LENGTH_LONG)
                         .show();
 
@@ -232,10 +242,7 @@ public class HouseThermostatActivity extends Activity {
                 double temp_return = data.getDoubleExtra("newItem_temp", -900);
                 listTemperature = new TreeMap<>((Map<Integer, Double>) data.getExtras().get("treeMap"));
 
-                DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
-                newTemp.setTemp(temp_return);
-                newTemp.setTimeOfWeek(time_return);
-                databaseHelper.insert(time_return, newTemp.toString());
+                changeDatabase(time_return,temp_return);
                 Toast.makeText(getApplicationContext(), "New Temperature rule is edited/saved: \n" + (new DTO_TemperatureSetting(time_return, temp_return)).toString(), Toast.LENGTH_LONG)
                         .show();
 
@@ -380,6 +387,7 @@ public class HouseThermostatActivity extends Activity {
                         Toast.LENGTH_SHORT).show();
 
                 listTemperature.put(Integer.valueOf(time), Double.valueOf(temp));
+                changeDatabase(time,temp);
 
                 updateListView_toolbar();
             }
