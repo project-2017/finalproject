@@ -68,4 +68,7 @@
     <string name="tracker_dashboard_thisMonthTime">This Month Total Exercise Time (Minute)</string>
     <string name="tracker_dashboard_lastMonthTime">Last Month Total Exercise Time (Minute)</string>
     <string name="tracker_help_title">Help</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
