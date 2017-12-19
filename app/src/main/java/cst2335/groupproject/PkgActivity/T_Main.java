@@ -77,7 +77,7 @@ public class T_Main extends Fragment {
     private void openDashboard() {
         T_Fragment_Dashboard fragment = new T_Fragment_Dashboard();
         FragmentTransaction fragmentTransaction =
-                getChildFragmentManager().beginTransaction();
+                getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.tracker_main_container_fragment, fragment);
         fragmentTransaction.commit();
     }
