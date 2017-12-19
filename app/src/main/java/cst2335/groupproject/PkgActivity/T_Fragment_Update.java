@@ -4,16 +4,19 @@ package cst2335.groupproject.PkgActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,16 +26,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
 import cst2335.groupproject.R;
 
 /**
- * This class is used for creating the insert GUI of activity tracker
- *
- * @author Geyan Huang
+ * A simple {@link Fragment} subclass.
  */
-public class T_Fragment_Insert extends Fragment {
+public class T_Fragment_Update extends Fragment {
 
     /**
      * The view of the fragment
@@ -77,17 +76,27 @@ public class T_Fragment_Insert extends Fragment {
     /**
      * LinearLayouts
      */
-    LinearLayout date, time, comment, minute;
+    LinearLayout l_date, l_time, l_comment, l_minute;
 
     /**
      * ImageViews
      */
     ImageView check, close, comment_check;
 
-    public T_Fragment_Insert() {
+    /**
+     * The id of row in database
+     */
+    String id;
+
+    /**
+     * Button delete
+     */
+    Button delete;
+
+
+    public T_Fragment_Update() {
         // Required empty public constructor
     }
-
 
     /**
      * On create view
@@ -100,8 +109,9 @@ public class T_Fragment_Insert extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.tracker_fragment_insert, container, false);
+        view = inflater.inflate(R.layout.tracker_fragment_update, container, false);
         return view;
+
     }
 
     /**
@@ -118,26 +128,55 @@ public class T_Fragment_Insert extends Fragment {
         textView_time = view.findViewById(R.id.tracker_insert_textView_time);
         textView_comment = view.findViewById(R.id.tracker_insert_textView_comment);
 
-        date = view.findViewById(R.id.tracker_insert_date);
-        time = view.findViewById(R.id.tracker_insert_time);
-        comment = view.findViewById(R.id.tracker_insert_comment_dialog);
-        minute = view.findViewById(R.id.tracker_insert_minute);
+        l_date = view.findViewById(R.id.tracker_update_date);
+        l_time = view.findViewById(R.id.tracker_update_time);
+        l_comment = view.findViewById(R.id.tracker_update_comment_dialog);
+        l_minute = view.findViewById(R.id.tracker_update_minute);
         check = view.findViewById(R.id.tracker_insert_check);
         close = view.findViewById(R.id.tracker_insert_close);
+        delete = view.findViewById(R.id.tracker_delete);
 
+        // Get everything from activity list
+        id = getActivity().getIntent().getStringExtra("Id");
+        String type = getActivity().getIntent().getStringExtra("Type");
+        String minute = getActivity().getIntent().getStringExtra("Minute");
+        String comment = getActivity().getIntent().getStringExtra("Comment");
+        String date = getActivity().getIntent().getStringExtra("Date");
+        String time = getActivity().getIntent().getStringExtra("Time");
 
-        // Set current date
-        final Calendar cal = Calendar.getInstance();
-        x_year = cal.get(Calendar.YEAR);
-        x_month = cal.get(Calendar.MONTH);
-        x_day = cal.get(Calendar.DAY_OF_MONTH);
-        x_hour = cal.get(Calendar.HOUR_OF_DAY);
-        x_minute = cal.get(Calendar.MINUTE);
+        // Set spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.tracker_list_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_type.setAdapter(adapter);
+        if (!type.equals(null)) {
+            int spinnerPosition = adapter.getPosition(type);
+            spinner_type.setSelection(spinnerPosition);
+        }
+
+        editText_minute.setText(minute.replace(" Min", ""));
+        textView_comment.setText(comment);
+
+        if (!date.equals("")) {
+            String[] dates = date.split("-");
+            x_year = Integer.parseInt(dates[0]);
+            x_month = Integer.parseInt(dates[1]) - 1;
+            x_day = Integer.parseInt(dates[2]);
+        }
+
+        if (!time.equals("")) {
+            String[] times = time.split(":");
+            x_hour = Integer.parseInt(times[0]);
+            x_minute = Integer.parseInt(times[1]);
+        }
 
         setDate();
         setTime();
 
-        date.setOnClickListener(new View.OnClickListener() {
+        // Hide soft keyboard
+        editText_minute.requestFocus();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        l_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog datePicker = new DatePickerDialog(getActivity(), dpickerListner, x_year, x_month, x_day);
@@ -145,7 +184,7 @@ public class T_Fragment_Insert extends Fragment {
             }
         });
 
-        time.setOnClickListener(new View.OnClickListener() {
+        l_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePicker = new TimePickerDialog(getActivity(), tpickerListner, x_hour, x_minute, true);
@@ -153,7 +192,7 @@ public class T_Fragment_Insert extends Fragment {
             }
         });
 
-        comment.setOnClickListener(new View.OnClickListener() {
+        l_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder commentBuilder = new AlertDialog.Builder(getActivity());
@@ -173,19 +212,41 @@ public class T_Fragment_Insert extends Fragment {
                 comment_check.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            textView_comment.setText(editText_comment.getText());
-                            commentDialog.dismiss();
+                        textView_comment.setText(editText_comment.getText());
+                        commentDialog.dismiss();
+                    }
+                });
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            final Intent resultIntent = new Intent();
+                            resultIntent.putExtra("Id", id);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage(R.string.tracker_delete_dialog_message);
+                            builder.setPositiveButton(R.string.tracker_delete_dialog_ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    getActivity().setResult(3, resultIntent);
+                                    getActivity().finish();
+                                }
+                            })
+                                    .setNegativeButton(R.string.tracker_delete_dialog_cancel, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                        }
+                                    })
+                                    .show();
                         }
                 });
             }
         });
 
-        minute.setOnClickListener(new View.OnClickListener() {
+        l_minute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-                    inputMethodManager.showSoftInput(editText_minute, InputMethodManager.SHOW_IMPLICIT);
-                }
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(editText_minute, InputMethodManager.SHOW_IMPLICIT);
+            }
         });
 
         check.setOnClickListener(new View.OnClickListener() {
@@ -216,21 +277,6 @@ public class T_Fragment_Insert extends Fragment {
 
     }
 
-
-    /**
-     * Date Picker
-     */
-    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            x_year = year;
-            x_month = month;
-            x_day = dayOfMonth;
-
-            setDate();
-        }
-    };
-
     /**
      * Function for setting date
      */
@@ -250,19 +296,6 @@ public class T_Fragment_Insert extends Fragment {
     }
 
     /**
-     * Time picker
-     */
-    private TimePickerDialog.OnTimeSetListener tpickerListner = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            x_hour = hourOfDay;
-            x_minute = minute;
-
-            setTime();
-        }
-    };
-
-    /**
      * Function for setting time
      */
     private void setTime() {
@@ -278,4 +311,31 @@ public class T_Fragment_Insert extends Fragment {
         }
         textView_time.setText(hour + ":" + minute);
     }
+
+    /**
+     * Date Picker
+     */
+    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            x_year = year;
+            x_month = month;
+            x_day = dayOfMonth;
+
+            setDate();
+        }
+    };
+
+    /**
+     * Time picker
+     */
+    private TimePickerDialog.OnTimeSetListener tpickerListner = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            x_hour = hourOfDay;
+            x_minute = minute;
+
+            setTime();
+        }
+    };
 }
