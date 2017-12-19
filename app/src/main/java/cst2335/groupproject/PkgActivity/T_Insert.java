@@ -1,9 +1,10 @@
 package cst2335.groupproject.PkgActivity;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import cst2335.groupproject.R;
 
@@ -12,7 +13,7 @@ import cst2335.groupproject.R;
  *
  * @author Geyan Huang
  */
-public class T_Insert extends Activity {
+public class T_Insert extends AppCompatActivity {
 
     /**
      * On create
@@ -26,8 +27,14 @@ public class T_Insert extends Activity {
 
         Fragment fragment = new T_Fragment_Insert();
         FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
+                getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.tracker_insert_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        finish();
     }
 }

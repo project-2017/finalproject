@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -63,9 +64,9 @@ public class T_Main extends Fragment {
      * Open activity list
      */
     private void openList() {
-        T_Fragment_ActivityList fragment = new T_Fragment_ActivityList();
-        android.support.v4.app.FragmentTransaction fragmentTransaction =
-                getChildFragmentManager().beginTransaction();
+        Fragment fragment = new T_Fragment_ActivityList();
+        FragmentTransaction fragmentTransaction =
+                getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.tracker_main_container_fragment, fragment);
         fragmentTransaction.commit();
     }
@@ -75,7 +76,7 @@ public class T_Main extends Fragment {
      */
     private void openDashboard() {
         T_Fragment_Dashboard fragment = new T_Fragment_Dashboard();
-        android.support.v4.app.FragmentTransaction fragmentTransaction =
+        FragmentTransaction fragmentTransaction =
                 getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.tracker_main_container_fragment, fragment);
         fragmentTransaction.commit();

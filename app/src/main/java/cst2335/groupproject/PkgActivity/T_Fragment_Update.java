@@ -9,7 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,10 @@ public class T_Fragment_Update extends Fragment {
      */
     Button delete;
 
+    /**
+     * Strings
+     */
+    String type, minute, comment, date, time;
 
     public T_Fragment_Update() {
         // Required empty public constructor
@@ -113,6 +118,7 @@ public class T_Fragment_Update extends Fragment {
         return view;
 
     }
+
 
     /**
      * On activity created
@@ -136,13 +142,22 @@ public class T_Fragment_Update extends Fragment {
         close = view.findViewById(R.id.tracker_insert_close);
         delete = view.findViewById(R.id.tracker_delete);
 
-        // Get everything from activity list
-        id = getActivity().getIntent().getStringExtra("Id");
-        String type = getActivity().getIntent().getStringExtra("Type");
-        String minute = getActivity().getIntent().getStringExtra("Minute");
-        String comment = getActivity().getIntent().getStringExtra("Comment");
-        String date = getActivity().getIntent().getStringExtra("Date");
-        String time = getActivity().getIntent().getStringExtra("Time");
+        if (getActivity().getLocalClassName().equals("PkgActivity.T_Update")) {
+            // Get everything from activity list
+            id = getActivity().getIntent().getStringExtra("Id");
+            type = getActivity().getIntent().getStringExtra("Type");
+            minute = getActivity().getIntent().getStringExtra("Minute");
+            comment = getActivity().getIntent().getStringExtra("Comment");
+            date = getActivity().getIntent().getStringExtra("Date");
+            time = getActivity().getIntent().getStringExtra("Time");
+        } else {
+            id = getArguments().getString("Id");
+            type = getArguments().getString("Type");
+            minute = getArguments().getString("Minute");
+            comment = getArguments().getString("Comment");
+            date = getArguments().getString("Date");
+            time = getArguments().getString("Time");
+        }
 
         // Set spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.tracker_list_type, android.R.layout.simple_spinner_item);
@@ -231,16 +246,27 @@ public class T_Fragment_Update extends Fragment {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                minute = editText_minute.getText().toString();
+                type = spinner_type.getSelectedItem().toString();
+                date = textView_date.getText().toString();
+                time = textView_time.getText().toString();
+                comment = textView_comment.getText().toString();
                 if (!editText_minute.getText().toString().equals("")) {
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("Id", id);
-                    resultIntent.putExtra("Minute", editText_minute.getText().toString());
-                    resultIntent.putExtra("Type", spinner_type.getSelectedItem().toString());
-                    resultIntent.putExtra("Date", textView_date.getText().toString());
-                    resultIntent.putExtra("Time", textView_time.getText().toString());
-                    resultIntent.putExtra("Comment", textView_comment.getText().toString());
-                    getActivity().setResult(2, resultIntent);
-                    getActivity().finish();
+                    if (getActivity().getLocalClassName().equals("PkgActivity.T_Update")) {
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("Id", id);
+                        resultIntent.putExtra("Minute", minute);
+                        resultIntent.putExtra("Type", type);
+                        resultIntent.putExtra("Date", date);
+                        resultIntent.putExtra("Time", time);
+                        resultIntent.putExtra("Comment", comment);
+                        getActivity().setResult(2, resultIntent);
+                        getActivity().finish();
+                    } else {
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        T_Fragment_ActivityList fragment = (T_Fragment_ActivityList) fm.findFragmentById(R.id.tracker_main_container_fragment);
+                        fragment.update(id, minute, type, date, time, comment);
+                    }
                 } else {
                     Toast.makeText(getActivity(), R.string.tracker_insert_empty, Toast.LENGTH_SHORT).show();
 
@@ -251,7 +277,13 @@ public class T_Fragment_Update extends Fragment {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                if (getActivity().getLocalClassName().equals("PkgActivity.T_Update")) {
+                    getActivity().finish();
+                } else {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    T_Fragment_ActivityList fragment = (T_Fragment_ActivityList) fm.findFragmentById(R.id.tracker_main_container_fragment);
+                    fragment.closeSideBar();
+                }
             }
         });
 
@@ -263,9 +295,15 @@ public class T_Fragment_Update extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(R.string.tracker_delete_dialog_message);
                 builder.setPositiveButton(R.string.tracker_delete_dialog_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().setResult(3, resultIntent);
-                        getActivity().finish();
+                    public void onClick(DialogInterface dialog, int num) {
+                        if (getActivity().getLocalClassName().equals("PkgActivity.T_Update")) {
+                            getActivity().setResult(3, resultIntent);
+                            getActivity().finish();
+                        } else {
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            T_Fragment_ActivityList fragment = (T_Fragment_ActivityList) fm.findFragmentById(R.id.tracker_main_container_fragment);
+                            fragment.delete(id);
+                        }
                     }
                 })
                         .setNegativeButton(R.string.tracker_delete_dialog_cancel, new DialogInterface.OnClickListener() {

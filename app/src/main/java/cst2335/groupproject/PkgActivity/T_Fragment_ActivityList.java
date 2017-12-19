@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -281,23 +282,48 @@ public class T_Fragment_ActivityList extends Fragment {
         // Function for clicking listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Info info = (Info) (adapterView.getItemAtPosition(i));
-                int numId = info.getActivityId();
-                String id = numId + "";
-                String type = info.getType();
-                String minute = info.getMinute();
-                String date = info.getDate();
-                String time = info.getTime();
-                String comment = info.getComment();
-                Intent intent = new Intent(view.getContext(), T_Update.class);
-                intent.putExtra("Id", id);
-                intent.putExtra("Type", type);
-                intent.putExtra("Minute", minute);
-                intent.putExtra("Date", date);
-                intent.putExtra("Time", time);
-                intent.putExtra("Comment", comment);
-                startActivityForResult(intent, 2);
+            public void onItemClick(AdapterView<?> adapterView, View view_list, int i, long l) {
+                if (view.findViewById(R.id.container) == null) {
+                    Info info = (Info) (adapterView.getItemAtPosition(i));
+                    int numId = info.getActivityId();
+                    String id = numId + "";
+                    String type = info.getType();
+                    String minute = info.getMinute();
+                    String date = info.getDate();
+                    String time = info.getTime();
+                    String comment = info.getComment();
+                    Intent intent = new Intent(view.getContext(), T_Update.class);
+                    intent.putExtra("Id", id);
+                    intent.putExtra("Type", type);
+                    intent.putExtra("Minute", minute);
+                    intent.putExtra("Date", date);
+                    intent.putExtra("Time", time);
+                    intent.putExtra("Comment", comment);
+                    startActivityForResult(intent, 2);
+                } else {
+                    Info info = (Info) (adapterView.getItemAtPosition(i));
+                    int numId = info.getActivityId();
+                    String id = numId + "";
+                    String type = info.getType();
+                    String minute = info.getMinute();
+                    String date = info.getDate();
+                    String time = info.getTime();
+                    String comment = info.getComment();
+                    Fragment fragment = new T_Fragment_Update();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Id", id);
+                    bundle.putString("Type", type);
+                    bundle.putString("Minute", minute);
+                    bundle.putString("Date", date);
+                    bundle.putString("Time", time);
+                    bundle.putString("Comment", comment);
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    fragmentTransaction.commit();
+                }
+
             }
         });
 
@@ -307,9 +333,18 @@ public class T_Fragment_ActivityList extends Fragment {
 
         button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), T_Insert.class);
-                startActivityForResult(intent, 1);
+            public void onClick(View view_button) {
+                if (view.findViewById(R.id.container) == null) {
+                    Intent intent = new Intent(view.getContext(), T_Insert.class);
+                    startActivityForResult(intent, 1);
+                } else {
+                    Fragment fragment = new T_Fragment_Insert();
+                    FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    fragmentTransaction.commit();
+                }
+
             }
         });
 
@@ -457,6 +492,12 @@ public class T_Fragment_ActivityList extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.tracker_nav_bot_list);
+
+        if (view.findViewById(R.id.container) != null) {
+            if (getFragmentManager().findFragmentById(R.id.container) != null) {
+                closeSideBar();
+            }
+        }
     }
 
     /**
@@ -507,5 +548,80 @@ public class T_Fragment_ActivityList extends Fragment {
         protected void onPostExecute(ArrayList<Info> infos) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * Close side bar
+     */
+    public void closeSideBar() {
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.container)).commit();
+    }
+
+    /**
+     * Function for land insert
+     *
+     * @param minutes The minutes
+     * @param type    The type
+     * @param date    The date
+     * @param time    The time
+     * @param comment The comment
+     */
+    public void insert(String minutes, String type, String date, String time, String comment) {
+        closeSideBar();
+
+        // Always insert English activity type to database
+        if (Locale.getDefault().getLanguage().equals("zh")) {
+            type = typeToEn(type);
+        }
+        databaseHelper.insert(minutes, type, date, time, comment);
+        showHistory();
+
+        // Snack bar shows notification
+        Snackbar.make(view.findViewById(R.id.tracker_activityList_fragment_button_insert), R.string.tracker_insert_done, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+    }
+
+    /**
+     * Function for land update
+     *
+     * @param id      The id
+     * @param minutes The minutes
+     * @param type    The type
+     * @param date    The date
+     * @param time    The time
+     * @param comment The comment
+     */
+    public void update(String id, String minutes, String type, String date, String time, String comment) {
+        closeSideBar();
+
+        if (!minutes.equals("")) {
+
+            // Always update English activity type to database
+            if (Locale.getDefault().getLanguage().equals("zh")) {
+                type = typeToEn(type);
+            }
+
+            databaseHelper.update(id, minutes, type, date, time, comment);
+            showHistory();
+
+            // Snack bar shows notification
+            Snackbar.make(view.findViewById(R.id.tracker_activityList_fragment_button_insert), R.string.tracker_update_done, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+        }
+    }
+
+    /**
+     * Function for land delete
+     *
+     * @param id The id
+     */
+    public void delete(String id) {
+        closeSideBar();
+
+        // Delete row using ID
+        databaseHelper.delete(id);
+        showHistory();
+
+        // Snack bar shows notification
+        Snackbar.make(view.findViewById(R.id.tracker_activityList_fragment_button_insert), R.string.tracker_delete_done, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+
     }
 }

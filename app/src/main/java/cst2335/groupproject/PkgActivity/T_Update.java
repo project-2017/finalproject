@@ -1,9 +1,9 @@
 package cst2335.groupproject.PkgActivity;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import cst2335.groupproject.R;
 
@@ -12,7 +12,7 @@ import cst2335.groupproject.R;
  *
  * @author Geyan Huang
  */
-public class T_Update extends Activity {
+public class T_Update extends AppCompatActivity {
 
 
     /**
@@ -26,10 +26,15 @@ public class T_Update extends Activity {
         setContentView(R.layout.tracker_update);
 
         Fragment fragment = new T_Fragment_Update();
-        FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.tracker_insert_container, fragment);
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        finish();
+    }
 }

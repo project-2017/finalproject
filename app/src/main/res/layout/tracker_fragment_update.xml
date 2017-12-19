@@ -251,7 +251,8 @@
                     android:textColor="@color/trackerWhite" />
 
                 <View
-                    android:layout_width="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="300dp"
                     android:layout_height="10dp"/>
             </LinearLayout>
         </ScrollView>

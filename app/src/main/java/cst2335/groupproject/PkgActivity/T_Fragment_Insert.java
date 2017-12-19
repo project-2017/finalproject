@@ -4,11 +4,12 @@ package cst2335.groupproject.PkgActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,16 +59,6 @@ public class T_Fragment_Insert extends Fragment {
      * Year, month, day, hour, minute
      */
     int x_year, x_month, x_day, x_hour, x_minute;
-
-    /**
-     * Dialog ID for date picker
-     */
-    static final int DIALOG_ID_DATE = 1;
-
-    /**
-     * Dialog ID for time picker
-     */
-    static final int DIALOG_ID_TIME = 2;
 
     /**
      * EditTexts
@@ -173,9 +164,9 @@ public class T_Fragment_Insert extends Fragment {
                 comment_check.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            textView_comment.setText(editText_comment.getText());
-                            commentDialog.dismiss();
-                        }
+                        textView_comment.setText(editText_comment.getText());
+                        commentDialog.dismiss();
+                    }
                 });
             }
         });
@@ -183,23 +174,36 @@ public class T_Fragment_Insert extends Fragment {
         minute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-                    inputMethodManager.showSoftInput(editText_minute, InputMethodManager.SHOW_IMPLICIT);
-                }
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(editText_minute, InputMethodManager.SHOW_IMPLICIT);
+            }
         });
 
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String minute = editText_minute.getText().toString();
+                String type = spinner_type.getSelectedItem().toString();
+                String date = textView_date.getText().toString();
+                String time = textView_time.getText().toString();
+                String comment = textView_comment.getText().toString();
+
+
                 if (!editText_minute.getText().toString().equals("")) {
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("Minute", editText_minute.getText().toString());
-                    resultIntent.putExtra("Type", spinner_type.getSelectedItem().toString());
-                    resultIntent.putExtra("Date", textView_date.getText().toString());
-                    resultIntent.putExtra("Time", textView_time.getText().toString());
-                    resultIntent.putExtra("Comment", textView_comment.getText().toString());
-                    getActivity().setResult(1, resultIntent);
-                    getActivity().finish();
+                    if (getActivity().getLocalClassName().equals("PkgActivity.T_Insert")) {
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("Minute", minute);
+                        resultIntent.putExtra("Type", type);
+                        resultIntent.putExtra("Date", date);
+                        resultIntent.putExtra("Time", time);
+                        resultIntent.putExtra("Comment", comment);
+                        getActivity().setResult(1, resultIntent);
+                        getActivity().finish();
+                    } else {
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        T_Fragment_ActivityList fragment = (T_Fragment_ActivityList) fm.findFragmentById(R.id.tracker_main_container_fragment);
+                        fragment.insert(minute, type, date, time, comment);
+                    }
                 } else {
                     Toast.makeText(getActivity(), R.string.tracker_insert_empty, Toast.LENGTH_SHORT).show();
 
@@ -210,7 +214,13 @@ public class T_Fragment_Insert extends Fragment {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                if (getActivity().getLocalClassName().equals("PkgActivity.T_Insert")) {
+                    getActivity().finish();
+                } else {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    T_Fragment_ActivityList fragment = (T_Fragment_ActivityList) fm.findFragmentById(R.id.tracker_main_container_fragment);
+                    fragment.closeSideBar();
+                }
             }
         });
 

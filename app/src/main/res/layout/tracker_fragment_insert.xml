@@ -240,6 +240,11 @@
                             android:textSize="20sp" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <View
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="300dp"
+                    android:layout_height="0dp"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

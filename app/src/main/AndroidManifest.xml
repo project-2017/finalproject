@@ -21,8 +21,10 @@
         </activity>
         <activity
             android:name=".PkgActivity.T_Insert"
-            android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".PkgActivity.T_Update" />
+            android:windowSoftInputMode="stateVisible"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".PkgActivity.T_Update"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".PkgActivity.T_Help"
             android:label="@string/tracker_help_title"
