@@ -31,7 +31,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:text="@string/tracker_insert_title"
+                android:text="@string/tracker_update_title"
                 android:textColor="@color/trackerWhite"
                 android:textSize="20sp" />
 
