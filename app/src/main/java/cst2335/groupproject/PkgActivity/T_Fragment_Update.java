@@ -217,27 +217,6 @@ public class T_Fragment_Update extends Fragment {
                     }
                 });
 
-                delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                            final Intent resultIntent = new Intent();
-                            resultIntent.putExtra("Id", id);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setMessage(R.string.tracker_delete_dialog_message);
-                            builder.setPositiveButton(R.string.tracker_delete_dialog_ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    getActivity().setResult(3, resultIntent);
-                                    getActivity().finish();
-                                }
-                            })
-                                    .setNegativeButton(R.string.tracker_delete_dialog_cancel, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-
-                                        }
-                                    })
-                                    .show();
-                        }
-                });
             }
         });
 
@@ -254,12 +233,13 @@ public class T_Fragment_Update extends Fragment {
             public void onClick(View v) {
                 if (!editText_minute.getText().toString().equals("")) {
                     Intent resultIntent = new Intent();
+                    resultIntent.putExtra("Id", id);
                     resultIntent.putExtra("Minute", editText_minute.getText().toString());
                     resultIntent.putExtra("Type", spinner_type.getSelectedItem().toString());
                     resultIntent.putExtra("Date", textView_date.getText().toString());
                     resultIntent.putExtra("Time", textView_time.getText().toString());
                     resultIntent.putExtra("Comment", textView_comment.getText().toString());
-                    getActivity().setResult(1, resultIntent);
+                    getActivity().setResult(2, resultIntent);
                     getActivity().finish();
                 } else {
                     Toast.makeText(getActivity(), R.string.tracker_insert_empty, Toast.LENGTH_SHORT).show();
@@ -272,6 +252,28 @@ public class T_Fragment_Update extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent resultIntent = new Intent();
+                resultIntent.putExtra("Id", id);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.tracker_delete_dialog_message);
+                builder.setPositiveButton(R.string.tracker_delete_dialog_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getActivity().setResult(3, resultIntent);
+                        getActivity().finish();
+                    }
+                })
+                        .setNegativeButton(R.string.tracker_delete_dialog_cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        })
+                        .show();
             }
         });
 
