@@ -32,6 +32,10 @@ public class T_Update extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    /**
+     * On configuration changed
+     * @param newConfig The newConfig
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
