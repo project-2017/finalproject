@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -128,7 +129,7 @@ public class AutomobileActivity extends AppCompatActivity {
                 dHelper = new AutomobileDatabaseHelper(AutomobileActivity.this);
                 db = dHelper.getWritableDatabase();
                 Calendar c = Calendar.getInstance();
-                int lastMonth = c.get(Calendar.MONTH)-1;
+                int lastMonth = c.get(Calendar.MONTH);
                 cursor = db.rawQuery("SELECT AVG("+PURCHASE_PRICE+") FROM "+table_name+ " WHERE "+PURCHASE_MONTH+" = '"+lastMonth+"'",null);
                 cursor.moveToFirst();
                 Double averageP = cursor.getDouble(0);
@@ -164,16 +165,48 @@ public class AutomobileActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setTitle("Version 1.0 by Bin Yang");
-        builder1.setMessage(R.string.intro_a);
-        // Add the buttons
-        builder1.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
-        // Create the AlertDialog
-        AlertDialog dialog1 = builder1.create();
-        dialog1.show();
+        switch (item.getItemId()) {
+            case R.id.version:
+                Log.d("Toolbar", "Option 1 selected");
+                Snackbar.make(findViewById(R.id.version),
+                        R.string.version, Snackbar.LENGTH_LONG)
+                        .setAction("Action1", null).show();
+                break;
+
+            case R.id.author:
+                Log.d("Toolbar", "Option 2 selected");
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.back);
+                // Add the buttons
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+//                        Intent start = new Intent(TestToolBar.this, StartActivity.class);
+//                        startActivity(start);
+                    }
+                });
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                break;
+
+            case R.id.help:
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setTitle("Version 1.0 by Bin Yang");
+                builder1.setMessage(R.string.intro_a);
+                // Add the buttons
+                builder1.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+                // Create the AlertDialog
+                AlertDialog dialog1 = builder1.create();
+                dialog1.show();
+        }
         return true;
     }
 

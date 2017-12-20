@@ -7,4 +7,16 @@
         android:orderInCategory="103"
         app:showAsAction="never" />
 
+    <item android:id="@+id/version"
+        android:title="@string/help_a"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:icon="@drawable/icons8_information_48px_2"/>
+
+    <item android:id="@+id/author"
+        android:title="@string/help_a"
+        android:orderInCategory="102"
+        app:showAsAction="always"
+        android:icon="@drawable/icons8_spiderman_head_48px"/>
+
 </menu>

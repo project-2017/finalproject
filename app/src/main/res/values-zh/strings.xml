@@ -73,5 +73,7 @@
     <string name="title_a">车辆加油记录</string>
     <string name="intro_a">此应用程序可以用来记录为爱车加油的一些数据。并可以计算上个月购买汽油的平均价格，以及上月购买汽油的总量。同时，还可以根据客户的选择，显示一年中每个月加油的数量。</string>
     <string name="prompt">请输入你希望查询的年份： </string>
+    <string name="back">你想返回吗?</string>
+    <string name="version">版本1.0 作者杨斌</string>
     <!--end of Auto-->
 </resources>
