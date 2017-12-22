@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <!--Top: calories were eaten in the last day-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/food_Dashboard_text1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_centerInParent="true"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/ic_food_circle_shape"
+                android:indeterminate="false"
+                android:max="3000"
+                android:progressDrawable="@drawable/ic_food_circular_progress_bar" />
+
+            <TextView
+                android:id="@+id/progress_circle_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:textColor="@color/deleteButtonColor"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/progressBar1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="@string/food_Dashboard_max" />
+
+        </RelativeLayout>
+    </LinearLayout><!--End of Medium-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <!--Bottom: average calories eaten per day-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/food_Dashboard_text2"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_centerInParent="true"
+                android:layout_width="200dp"
+                android:layout_height="225dp"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/ic_food_circle_shape"
+                android:indeterminate="false"
+                android:max="3000"
+                android:progressDrawable="@drawable/ic_food_circular_progress_bar" />
+
+            <TextView
+                android:id="@+id/progress_circle_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:textColor="@color/deleteButtonColor"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/progressBar2">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/progressBar2"
+                    android:layout_gravity="center"
+                    android:text="@string/food_Dashboard_totalCalories" />
+
+                <TextView
+                    android:id="@+id/totalCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/deleteButtonColor"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/progressBar2"
+                        android:layout_gravity="center"
+                        android:text="@string/food_Dashboard_totalDays" />
+
+                    <TextView
+                        android:id="@+id/totalDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/deleteButtonColor"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/food_Dashboard_max" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout><!--End of Bottom-->
+
+</LinearLayout>

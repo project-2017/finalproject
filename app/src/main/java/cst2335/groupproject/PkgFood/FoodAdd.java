@@ -10,11 +10,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
 import cst2335.groupproject.R;
 
 public class FoodAdd extends Activity {
@@ -55,7 +53,7 @@ public class FoodAdd extends Activity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                String dateFormat = "MM/dd/yyyy";
+                String dateFormat = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.CANADA);
                 addDate.setText(sdf.format(myCalendar.getTime()));
             }
@@ -70,10 +68,13 @@ public class FoodAdd extends Activity {
         });
 
         //Pop up time picker dialog when user clicks Time edit text
+
+
         addTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
                 int hour = myCurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = myCurrentTime.get(Calendar.MINUTE);
 
@@ -81,8 +82,13 @@ public class FoodAdd extends Activity {
                 myTimePicker = new TimePickerDialog(FoodAdd.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        addTime.setText(selectedHour + ":" + selectedMinute);
+                        myCurrentTime.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        myCurrentTime.set(Calendar.MINUTE, selectedMinute);
+                        addTime.setText(timeFormat.format(myCurrentTime.getTime()));
                     }
+/*                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        addTime.setText(selectedHour + ":" + selectedMinute);
+                    }*/
                 }, hour, minute, false);
                 myTimePicker.show();
             }

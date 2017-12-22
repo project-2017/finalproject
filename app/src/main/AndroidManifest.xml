@@ -21,13 +21,20 @@
         </activity>
         <activity
             android:name=".PkgActivity.T_Help"
-            android:label="@string/tracker_help_title"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
-
-
-        <activity android:name=".PkgFood.FoodList"></activity>
-        <activity android:name=".PkgFood.FoodAdd"></activity>
-        <activity android:name=".PkgFood.FoodUpdate"></activity>
+            android:label="@string/tracker_help_title"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".PkgFood.FoodList"
+            android:theme="@style/FoodAppTheme"/>
+        <activity android:name=".PkgFood.FoodAdd"
+            android:theme="@style/FoodAppTheme"/>
+        <activity android:name=".PkgFood.FoodUpdate"
+            android:theme="@style/FoodAppTheme"/>
+        <activity android:name=".PkgFood.FoodUpdateDetails"
+            android:theme="@style/FoodAppTheme"/>
+        <activity android:name=".PkgFood.FoodDashboard"
+            android:label="@string/food_Dashboard_titleBar"
+            android:theme="@style/FoodAppTheme" />
     </application>
+
 </manifest>

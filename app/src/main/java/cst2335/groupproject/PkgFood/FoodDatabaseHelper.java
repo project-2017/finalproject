@@ -98,6 +98,17 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    /**
+     *
+     * @param id column id
+     * @param foodName food name column
+     * @param foodServings food servings column
+     * @param calories calories column
+     * @param fat fat column
+     * @param carbohydrate carbohydrate column
+     * @param date date column
+     * @param time time column
+     */
     public void updateData(String id, String foodName, String foodServings, String calories, String fat, String carbohydrate, String date, String time) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_FOOD_NAME, foodName);
@@ -110,6 +121,10 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         database.update(TABLE_NAME, values, COLUMN_ID + " = " + id, null);
     }
 
+    /**
+     * Delete one record from the database
+     * @param id
+     */
     public void deleteData(String id) {
         database.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = " + id);
 /*        database.delete(TABLE_NAME, "id = ?", new String[] {id});*/
@@ -117,5 +132,47 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getRecords() {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
+    }
+
+    public int countDays() {
+        int totalDays = 0;
+        Cursor cursor = database.rawQuery("SELECT COUNT(DISTINCT " + COLUMN_DATE + ") FROM " + TABLE_NAME, null);
+        if(cursor.moveToFirst()) {
+            totalDays = cursor.getInt(0);
+        }
+        return totalDays;
+
+    }
+
+    public int countCalories() {
+        int totalCalories = 0;
+        Cursor cursor = database.rawQuery("SELECT SUM(" + COLUMN_CALORIES + ") FROM " + TABLE_NAME, null);
+        if(cursor.moveToFirst()) {
+            totalCalories = cursor.getInt(0);
+        }
+        return totalCalories;
+
+    }
+
+    /**
+     *
+     * @return total rows number
+     */
+    public int getRowsCount() {
+        int count = 0;
+        Cursor cursor = database.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME,null);
+        if(cursor.moveToFirst()){
+            count = cursor.getInt(0);
+        }
+        return count;
+    }
+
+    public int getYesterdayCalories() {
+        int yesterdayCaloires = 0;
+        Cursor cursor = database.rawQuery("SELECT SUM(" + COLUMN_CALORIES + ") FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = DATE('now', '-1 day')",null);
+        if(cursor.moveToFirst()){
+            yesterdayCaloires = cursor.getInt(0);
+        }
+        return yesterdayCaloires;
     }
 }

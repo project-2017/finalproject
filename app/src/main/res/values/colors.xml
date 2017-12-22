@@ -7,10 +7,11 @@
 
 
     <!--Food Nutrition Info Activity color bundle-->
-    <color name="appBackground">#dfdfdf</color>
+    <color name="appBackground">#d7d7d7</color>
     <color name="titleBar">#88bb45</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="addButtonColor">#88bb45</color>
     <color name="deleteButtonColor">#ff552d</color>
     <color name="listView_date_and_time">#777777</color>
+    <color name="top_status_bar">#000000</color>
 </resources>

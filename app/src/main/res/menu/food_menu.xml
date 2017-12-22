@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_one"
+        android:title="@string/food_Dashboard_toolbar_one"
+        android:icon="@drawable/ic_food_toolbar_author"
+        android:orderInCategory="101"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_two"
+        android:title="@string/food_Dashboard_toolbar_two"
+        android:icon="@drawable/ic_food_toolbar_cross"
+        android:orderInCategory="102"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_three"
+        android:title="@string/food_Dashboard_toolbar_three"
+        android:orderInCategory="103"
+        app:showAsAction="never" />
+</menu>

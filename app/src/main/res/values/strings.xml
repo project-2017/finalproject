@@ -39,24 +39,63 @@
     <!--Food Nutrition Info Activity string bundle-->
     <string name="food_item_foodName">Food Name:</string>
     <string name="food_item_servings">Servings:</string>
-    <string name="food_item_calories">Calories:</string>
-    <string name="food_item_fat">Fat:</string>
-    <string name="food_item_carbohydrate">Carbohydrate:</string>
+    <string name="food_item_calories">Calories(g):</string>
+    <string name="food_item_fat">Fat(g):</string>
+    <string name="food_item_carbohydrate">Carbohydrate(g):</string>
     <string name="food_item_date">Date:</string>
-    <string name="food_item_time">Food Name:</string>
+    <string name="food_item_time">Time:</string>
 
     <string name="food_List_listViewTitleBar">Food Item List</string>
+    <string name="food_List_shareButtonText">SHARE:</string>
+    <string name="food_List_helpButtonText">HELP:</string>
     <string name="food_Add_addTitleBar">What Did You Eat?</string>
-    <string name="food_Update_updateTitleBar">Update Your Food Item</string>
     <string name="food_Add_empty_warning">Please fill out all fields.</string>
     <string name="food_Add_serving_warning">Servings must be greater than zero.</string>
     <string name="food_Add_addButton">Add</string>
     <string name="food_Add_infoAddSuccessful">Information was added successfully.</string>
     <string name="food_Add_infoAddUnsuccessful">Failed to add information.</string>
-
+    <string name="food_Update_updateTitleBar">Update Your Food Item</string>
     <string name="food_Update_updateButton">Update</string>
     <string name="food_Update_deleteButton">Delete</string>
+    <string name="food_Dashboard_titleBar">Calories Summary</string>
+    <string name="food_Dashboard_text1">YESTERDAY</string>
+    <string name="food_Dashboard_text2">AVERAGE PER DAY</string>
+    <string name="food_Dashboard_max">Calories Goal: &#160;3000</string>
+    <string name="food_Dashboard_totalDays">Total days:</string>
+    <string name="food_Dashboard_totalCalories">Total calories:</string>
+    <string name="food_Dashboard_toolbar_one">Author</string>
+    <string name="food_Dashboard_toolbar_two">Version</string>
+    <string name="food_Dashboard_toolbar_three">Help</string>
+    <string name="food_Dashboard_toolbar_one_message">Author: Zhan Shen, Version: v1.0.0</string>
+
+    <string name="food_Dialog_title_facebook">Share on Facebook</string>
+    <string name="food_Dialog_title_google">Share on Google+</string>
+    <string name="food_Dialog_title_twitter">Share on Twitter</string>
+    <string name="food_Dialog_title_help">HELP</string>
+    <string name="food_Dialog_comment">Your comment</string>
+    <string name="food_Dialog_share">Share</string>
+    <string name="food_Dialog_cancel">Cancel</string>
+    <string name="food_Dialog_exit">Exit</string>
+    <string name="food_Dialog_deleteMessage">Are you sure you want to delete?</string>
+    <string name="food_Dialog_delete">Delete</string>
+    <string name="food_Dialog_help_author">Author:</string>
+    <string name="food_Dialog_help_author_name">Zhan Shen</string>
+    <string name="food_Dialog_help_version">Version:</string>
+    <string name="food_Dialog_help_version_number">v1.0.0</string>
+    <string name="food_Dialog_help_guide">User guide:</string>
+    <string name="food_Dialog_help_guide_add">Add a new record</string>
+    <string name="food_Dialog_help_guide_statistic">Check calories summary</string>
+    <string name="food_Dialog_help_guide_arrow">Edit or delete selected record</string>
+    <string name="food_Dialog_help_guide_social">Share to social media</string>
+
+    <string name="food_Snackbar_facebookMessage">Shared on Facebook successfully.</string>
+    <string name="food_Snackbar_googleMessage">Shared on Google+ successfully.</string>
+    <string name="food_Snackbar_twitterMessage">Shared on Twitter successfully.</string>
 
 
-    <string name="add_f">Add</string>
+
+
+
+
+
 </resources>

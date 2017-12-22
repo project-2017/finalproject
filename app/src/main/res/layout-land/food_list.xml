@@ -48,9 +48,9 @@
     </LinearLayout>
 
     <!--Center: Food item ListView-->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/listView"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/titleBar"
@@ -60,14 +60,20 @@
             android:id="@+id/foodListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/titleBar"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:divider="#ff552d"
             android:dividerHeight="1sp" />
 
-    </LinearLayout>
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/foodListView" />
+
+    </RelativeLayout>
 
 
     <!--Progress bar-->
