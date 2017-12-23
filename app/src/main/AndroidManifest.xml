@@ -28,7 +28,7 @@
             android:theme="@style/FoodAppTheme"/>
         <activity android:name=".PkgFood.FoodAdd"
             android:theme="@style/FoodAppTheme"/>
-        <activity android:name=".PkgFood.FoodUpdate"
+        <activity android:name=".PkgFood.FoodUpdate000000"
             android:theme="@style/FoodAppTheme"/>
         <activity android:name=".PkgFood.FoodUpdateDetails"
             android:theme="@style/FoodAppTheme"/>

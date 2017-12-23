@@ -17,13 +17,15 @@ import cst2335.groupproject.R;
 
 public class FoodAdd extends Activity {
 
-    /*    protected static final String ACTIVITY_NAME = "AddItemsActivity";
-        private String foodAdd = FoodAddActivity.class.getSimpleName();*/
     private EditText addFoodName, addServings, addCalories, addFat, addCarbohydrate, addDate, addTime;
-    private String addFoodAndServings;
     private Button buttonAdd;
     private FoodDatabaseHelper foodDatabaseHelper;
 
+    /**
+     * Initializes this activity
+     *
+     * @param savedInstanceState contains the activity's previously frozen state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +39,16 @@ public class FoodAdd extends Activity {
         addDate = (EditText) findViewById(R.id.addDate);
         addTime = (EditText) findViewById(R.id.addTime);
         buttonAdd = (Button) findViewById(R.id.addButton);
-        foodDatabaseHelper = new FoodDatabaseHelper(this);
 
+        foodDatabaseHelper = new FoodDatabaseHelper(this);
         foodDatabaseHelper.openDatabase();
 
-        //Get a calendar using the default locale and time-zone
+        /**
+         * Gets a calendar using the default locale and time-zone
+         */
         final Calendar myCalendar = Calendar.getInstance();
         final Calendar myCurrentTime = Calendar.getInstance();
 
-        //Pop up date picker dialog when user clicks Date edit text
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
@@ -59,6 +62,9 @@ public class FoodAdd extends Activity {
             }
         };
 
+        /**
+         * Pops up date picker dialog when user clicks Date edit text
+         */
         addDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,9 +73,9 @@ public class FoodAdd extends Activity {
             }
         });
 
-        //Pop up time picker dialog when user clicks Time edit text
-
-
+        /**
+         * Pops up time picker dialog when user clicks Time edit text
+         */
         addTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,15 +92,16 @@ public class FoodAdd extends Activity {
                         myCurrentTime.set(Calendar.MINUTE, selectedMinute);
                         addTime.setText(timeFormat.format(myCurrentTime.getTime()));
                     }
-/*                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        addTime.setText(selectedHour + ":" + selectedMinute);
-                    }*/
                 }, hour, minute, false);
                 myTimePicker.show();
             }
         });
 
-
+        /**
+         * Clicks on Add button to insert food information into database
+         * User must be fill out all required fields
+         * If data inserted successfully, displays a toast to show confirmation message. Otherwise, displays an failure message
+         */
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,17 +129,8 @@ public class FoodAdd extends Activity {
                         } else
                             Toast.makeText(FoodAdd.this, R.string.food_Add_infoAddUnsuccessful, Toast.LENGTH_SHORT).show();
                     }
-/*                    Intent resultIntent = new Intent();
-
-                    if (addServings.getText().toString().equals("1")) {
-                        addFoodAndServings = addServings.getText().toString() + " " + addFoodName.getText().toString();
-                    } else
-                        addFoodAndServings = addServings.getText().toString() + " " + addFoodName.getText().toString() + "s";
-
-                    resultIntent.putExtra("addFoodAndServings", addFoodAndServings);
-                    setResult(1, resultIntent);
-                    finish();//Go back to FoodListView class after user presses Add button*/
-                } else {
+                }
+                else {
                     Toast.makeText(getApplicationContext(), R.string.food_Add_empty_warning, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -140,11 +138,19 @@ public class FoodAdd extends Activity {
 
     }
 
+    /**
+     * Clicks on the cross image to close current activity
+     *
+     * @param view the Food Add view
+     */
     //Click on cross image to close current activity
     public void close_return(View view) {
         finish();
     }
 
+    /**
+     * Closes the database
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

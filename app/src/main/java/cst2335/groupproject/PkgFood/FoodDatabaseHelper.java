@@ -24,17 +24,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_TIME = "time";
 
-
-    public static String[] FOOD_LIST_FIELDS = new String[] {
-            COLUMN_FOOD_NAME,
-            COLUMN_SERVINGS,
-            COLUMN_CALORIES,
-            COLUMN_FAT,
-            COLUMN_CARBOHYDRATE,
-            COLUMN_DATE,
-            COLUMN_TIME
-    };
-
+    /**
+     * Creates database table
+     */
     private static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_FOOD_NAME + " TEXT," +
@@ -46,16 +38,33 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_TIME + " TEXT" +
             ")";
 
+    /**
+     * Constructor
+     *
+     * @param ctx database context
+     */
     public FoodDatabaseHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Called when the database is created for the first time
+     *
+     * @param sqLiteDatabase the database
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_TABLE);
         Log.i(foodDatabase_className, "Calling onCreate");
     }
 
+    /**
+     * Called when the database needs to be upgraded
+     *
+     * @param sqLiteDatabase the database
+     * @param oldVersion old version number of database
+     * @param newVersion new version number of database
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
@@ -64,6 +73,13 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "oldVersion =" + oldVersion + "newVersion =" + newVersion);
     }
 
+    /**
+     * Called when the database needs to be downgraded
+     *
+     * @param sqLiteDatabase the database
+     * @param oldVersion old version number of database
+     * @param newVersion new version number of database
+     */
     @Override
     public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
@@ -72,16 +88,34 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
                 "oldVersion =" + oldVersion + "newVersion =" + newVersion);
     }
 
+    /**
+     * Opens the database
+     */
     public void openDatabase() {
         database = this.getWritableDatabase();
     }
 
+    /**
+     * Closes the database
+     */
     public void closeDatabase() {
         if(database != null && database.isOpen()){
             database.close();
         }
     }
 
+    /**
+     * Inserts food information into the database
+     *
+     * @param foodName food name
+     * @param foodServings servings
+     * @param calories food calories
+     * @param fat food fat
+     * @param carbohydrate food carbohydrate
+     * @param date the date food eaten
+     * @param time the time food eaten
+     * @return insert result
+     */
     public boolean insertData(String foodName, String foodServings, String calories, String fat, String carbohydrate, String date, String time) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_FOOD_NAME, foodName);
@@ -99,6 +133,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Updates a record of database
      *
      * @param id column id
      * @param foodName food name column
@@ -122,18 +157,29 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Delete one record from the database
-     * @param id
+     * Deletes a record from the database
+     *
+     * @param id column id
      */
     public void deleteData(String id) {
         database.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = " + id);
 /*        database.delete(TABLE_NAME, "id = ?", new String[] {id});*/
     }
 
+    /**
+     * Gets database record
+     *
+     * @return database record
+     */
     public Cursor getRecords() {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
+    /**
+     * Counts total days have been entered into database
+     *
+     * @return total days
+     */
     public int countDays() {
         int totalDays = 0;
         Cursor cursor = database.rawQuery("SELECT COUNT(DISTINCT " + COLUMN_DATE + ") FROM " + TABLE_NAME, null);
@@ -144,6 +190,11 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Counts total food calories have been entered into database
+     *
+     * @return total calories
+     */
     public int countCalories() {
         int totalCalories = 0;
         Cursor cursor = database.rawQuery("SELECT SUM(" + COLUMN_CALORIES + ") FROM " + TABLE_NAME, null);
@@ -155,8 +206,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Counts total rows
      *
-     * @return total rows number
+     * @return total row number
      */
     public int getRowsCount() {
         int count = 0;
@@ -167,12 +219,17 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    /**
+     * Gets last day calories
+     *
+     * @return last day calories
+     */
     public int getYesterdayCalories() {
-        int yesterdayCaloires = 0;
+        int yesterdayCalories = 0;
         Cursor cursor = database.rawQuery("SELECT SUM(" + COLUMN_CALORIES + ") FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = DATE('now', '-1 day')",null);
         if(cursor.moveToFirst()){
-            yesterdayCaloires = cursor.getInt(0);
+            yesterdayCalories = cursor.getInt(0);
         }
-        return yesterdayCaloires;
+        return yesterdayCalories;
     }
 }

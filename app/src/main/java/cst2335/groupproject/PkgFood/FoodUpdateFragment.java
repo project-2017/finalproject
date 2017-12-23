@@ -1,12 +1,10 @@
 package cst2335.groupproject.PkgFood;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +28,21 @@ public class FoodUpdateFragment extends Fragment {
     private String columnID;
     private ImageView crossButton;
 
+    /**
+     * Default constructor
+     */
     public FoodUpdateFragment() {
-        // Required empty public constructor
+
     }
 
+    /**
+     * Creates and returns the view hierarchy associated with the fragment
+     *
+     * @param inflater the inflater
+     * @param container the container
+     * @param savedInstanceState contains the activity's previously frozen state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -41,6 +50,11 @@ public class FoodUpdateFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Called when the fragment's activity has been created and this fragment's view hierarchy instantiated
+     *
+     * @param savedInstanceState contains the activity's previously frozen state
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -72,7 +86,6 @@ public class FoodUpdateFragment extends Fragment {
         final Calendar myCalendar = Calendar.getInstance();
         final Calendar myCurrentTime = Calendar.getInstance();
 
-        //Pop up date picker dialog when user clicks Date edit text
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
@@ -86,6 +99,9 @@ public class FoodUpdateFragment extends Fragment {
             }
         };
 
+        /**
+         * Pops up date picker dialog when user clicks Date edit text
+         */
         updateDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +110,9 @@ public class FoodUpdateFragment extends Fragment {
             }
         });
 
-        //Pop up time picker dialog when user clicks Time edit text
+        /**
+         * Pops up time picker dialog when user clicks Date edit text
+         */
         updateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +137,9 @@ public class FoodUpdateFragment extends Fragment {
             }
         });
 
-        //Update information when user changes any fields
+        /**
+         * Updates information when user changes any fields
+         */
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,49 +157,28 @@ public class FoodUpdateFragment extends Fragment {
             }
         });
 
-        //Delete item form ListView and remove from database
+        /**
+         * Deletes item form ListView and remove from database
+         */
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-/*                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setMessage(R.string.food_Dialog_deleteMessage)
-                        .setPositiveButton(R.string.food_Dialog_delete, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                foodDatabaseHelper.deleteData(columnID);
-                            }
-                        })
-                        .setNegativeButton(R.string.food_Dialog_cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        });
-                        builder.create().show();*/
                 foodDatabaseHelper.deleteData(columnID);
                 getActivity().finish();
             }
 
         });
-
-        crossButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
-
-/*        //This fragment should close when phone or tablet orientation is landscape. The screen should display previous activity.
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().finish();
-        }*/
     }
 
+    /**
+     * Closes the database
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         foodDatabaseHelper.closeDatabase();
     }
-
 
 }
 

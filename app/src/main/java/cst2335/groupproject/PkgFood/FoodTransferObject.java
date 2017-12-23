@@ -1,14 +1,22 @@
 package cst2335.groupproject.PkgFood;
 
-/**
- * Created by EXIT on 12/12/2017.
- */
-
 public class FoodTransferObject implements Comparable<FoodTransferObject> {
 
     private int foodID;
     private String foodName, foodServings, foodCalories, foodFat, foodCarbohydrate, foodDate, foodTime;
 
+    /**
+     * Constructor
+     *
+     * @param foodID food column id
+     * @param foodName the food name
+     * @param foodServings servings
+     * @param foodCalories food calories
+     * @param foodFat food fat
+     * @param foodCarbohydrate food carbohydrate
+     * @param foodDate the date food eaten
+     * @param foodTime the time food eaten
+     */
     public FoodTransferObject(int foodID, String foodName, String foodServings, String foodCalories, String foodFat, String foodCarbohydrate, String foodDate, String foodTime) {
         this.foodID = foodID;
         this.foodName = foodName;
@@ -57,12 +65,11 @@ public class FoodTransferObject implements Comparable<FoodTransferObject> {
      * A function for sorting arrayList
      *
      * @param object The food list information
-     * @return String
+     * @return compared result
      */
     @Override
     public int compareTo(FoodTransferObject object) {
         return (object.getFoodDate() + " " + object.getFoodTime()).compareTo(getFoodDate() + " " + getFoodTime());
     }
-
 
 }

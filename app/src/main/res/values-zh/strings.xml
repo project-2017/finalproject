@@ -59,7 +59,15 @@
     <string name="food_Update_deleteButton">删除</string>
     <string name="food_Dashboard_titleBar">卡路里概要</string>
     <string name="food_Dashboard_text1">昨天</string>
-    <string name="food_Dashboard_text2">每一天</string>
+    <string name="food_Dashboard_text2">平均每一天</string>
+    <string name="food_Dashboard_max">卡路里目标：&#160;3000</string>
+    <string name="food_Dashboard_totalDays">总天数：</string>
+    <string name="food_Dashboard_totalCalories">总卡路里：</string>
+    <string name="food_Dashboard_toolbar_one">作者</string>
+    <string name="food_Dashboard_toolbar_two">版本</string>
+    <string name="food_Dashboard_toolbar_three">帮助</string>
+    <string name="food_Dashboard_toolbar_one_message">作者：沈湛， 版本：v1.0.0</string>
+
 
     <string name="food_Dialog_title_facebook">分享到脸书</string>
     <string name="food_Dialog_title_google">分享到谷歌+</string>

@@ -50,7 +50,7 @@
     <!--Center: Food item ListView-->
     <RelativeLayout
         android:id="@+id/listView"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/titleBar"
@@ -58,7 +58,7 @@
 
         <ListView
             android:id="@+id/foodListView"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -68,7 +68,7 @@
 
         <FrameLayout
             android:id="@+id/frameLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_toEndOf="@+id/foodListView" />

@@ -7,7 +7,6 @@ import cst2335.groupproject.R;
 
 public class FoodUpdateDetails extends Activity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +26,6 @@ public class FoodUpdateDetails extends Activity {
         fragment.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.phone_frameLayout, fragment);
-/*        //Call transaction.addToBackStack(String name) if you want to undo this transaction with the back button.
-        ft.addToBackStack("A string");*/
         ft.commit();
     }
 }

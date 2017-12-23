@@ -1,20 +1,16 @@
 package cst2335.groupproject.PkgFood;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,24 +21,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-
 import cst2335.groupproject.R;
-
 import static java.lang.Thread.sleep;
 
 public class FoodList extends Activity {
@@ -57,17 +38,35 @@ public class FoodList extends Activity {
     private String foodList_className = FoodList.class.getSimpleName();
     private ProgressBar progressBar;
 
-
+    /**
+     * An inner class of FoodList, displays food item details which get from FoodTransferObject class in an array
+     */
     class FoodListAdapter extends ArrayAdapter<FoodTransferObject> {
 
+        /**
+         * Constructor: Pass 0 as the int resource parameter because it will not be using the default layout
+         *
+         * @param ctx the Adapter context
+         */
         public FoodListAdapter(Context ctx) {
             super(ctx, 0);
         }
 
+        /**
+         * Counts how many items are in the data set represented by this Adapter
+         *
+         * @return the size of the ArrayList
+         */
         public int getCount() {
             return foodArrayList.size();
         }
 
+        /**
+         * Gets food item
+         *
+         * @param position cursor position
+         * @return
+         */
         public FoodTransferObject getItem(int position) {
             return foodArrayList.get(position);
         }
@@ -87,6 +86,11 @@ public class FoodList extends Activity {
         }
     }
 
+    /**
+     * Initializes this activity
+     *
+     * @param savedInstanceState contains the activity's previously frozen state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +118,9 @@ public class FoodList extends Activity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-
-        //User clicks on the circle Add button to go to FoodAdd activity
+        /**
+         * User clicks on the circle Add button to go to FoodAdd activity to add a food item
+         */
         buttonCircleAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +129,9 @@ public class FoodList extends Activity {
             }
         });
 
+        /**
+         * User clicks on the circle statistic button to go to FoodDashboard activity to see calories summary
+         */
         buttonDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +141,7 @@ public class FoodList extends Activity {
         });
 
         /**
-         * Click on Facebook icon to show a custom dialog.
+         * Clicks on Facebook icon to show a custom dialog
          */
         buttonFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +151,7 @@ public class FoodList extends Activity {
         });
 
         /**
-         * Click on Google+ icon to show a custom dialog.
+         * Clicks on Google+ icon to show a custom dialog
          */
         buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +161,7 @@ public class FoodList extends Activity {
         });
 
         /**
-         * Click on Twitter icon to show a custom dialog.
+         * Clicks on Twitter icon to show a custom dialog
          */
         buttonTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +171,7 @@ public class FoodList extends Activity {
         });
 
         /**
-         * Click on Help icon to show a custom dialog.
+         * Clicks on Help icon to show a custom dialog
          */
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,17 +180,15 @@ public class FoodList extends Activity {
             }
         });
 
-
-
         /**
-         * User clicks on each item of ListView to go to FoodUpdate fragment.
+         * User clicks on each item of Food ListView to edit details
+         * Goes to FoodUpdateDetails activity if the phone direction is portrait
+         * Goes to FoodUpdate fragment if the phone direction is landscape
          */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 FoodTransferObject fto = (FoodTransferObject) (adapterView.getItemAtPosition(position));
-
-/*                if(findViewById(R.id.frameLayout) != null) {*/
 
                     String food_ID = fto.getFoodID()+"";
                     String food_Name = fto.getFoodName();
@@ -193,24 +199,52 @@ public class FoodList extends Activity {
                     String food_Date = fto.getFoodDate();
                     String food_Time = fto.getFoodTime();
 
+                    if(findViewById(R.id.frameLayout) != null) {
+                        FoodUpdateFragment foodUpdateFragment = new FoodUpdateFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("food_ID", food_ID);
+                        bundle.putString("food_Name", food_Name);
+                        bundle.putString("food_Serving", food_Serving);
+                        bundle.putString("food_Calories", food_Calories);
+                        bundle.putString("food_Fat", food_Fat);
+                        bundle.putString("food_Carbohydrate", food_Carbohydrate);
+                        bundle.putString("food_Date", food_Date);
+                        bundle.putString("food_Time", food_Time);
 
-                    Intent intent = new Intent(FoodList.this, FoodUpdateDetails.class);
-                    intent.putExtra("food_ID", food_ID);
-                    intent.putExtra("food_Name", food_Name);
-                    intent.putExtra("food_Serving", food_Serving);
-                    intent.putExtra("food_Calories", food_Calories);
-                    intent.putExtra("food_Fat", food_Fat);
-                    intent.putExtra("food_Carbohydrate", food_Carbohydrate);
-                    intent.putExtra("food_Date", food_Date);
-                    intent.putExtra("food_Time", food_Time);
-                    startActivityForResult(intent, 2);
+                        foodUpdateFragment.setArguments(bundle);
+                        FragmentTransaction ft =  getFragmentManager().beginTransaction();
+                        ft.replace(R.id.frameLayout, foodUpdateFragment);
+                        //Call transaction.addToBackStack(String name) if user wants to undo this transaction with the back button.
+                        ft.addToBackStack("A string");
+                        ft.commit();
 
-                    Log.i(foodList_className, "Run on a phone");
-/*                }*/
+                        Log.i(foodList_className, "Run on a phone: landscape");
+                    }
+                    else {
+                        Intent intent = new Intent(FoodList.this, FoodUpdateDetails.class);
+                        intent.putExtra("food_ID", food_ID);
+                        intent.putExtra("food_Name", food_Name);
+                        intent.putExtra("food_Serving", food_Serving);
+                        intent.putExtra("food_Calories", food_Calories);
+                        intent.putExtra("food_Fat", food_Fat);
+                        intent.putExtra("food_Carbohydrate", food_Carbohydrate);
+                        intent.putExtra("food_Date", food_Date);
+                        intent.putExtra("food_Time", food_Time);
+                        startActivityForResult(intent, 2);
+
+                        Log.i(foodList_className, "Run on a phone: portrait");
+                    }
             }
         });
     }
 
+    /**
+     * Gets data and do actions when insert and update database
+     *
+     * @param requestCode the request code
+     * @param responseCode the response code
+     * @param data the data
+     */
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent data) {
         super.onActivityResult(requestCode, responseCode, data);
@@ -221,45 +255,28 @@ public class FoodList extends Activity {
         if (requestCode == 2) {
             displaySQL();
         }
-
     }
 
     /**
-     * Refresh the ArrayList every time when it's called (after add, update or delete items from )
+     * Async the database when it's called (after add, update or delete items from )
      */
     private void displaySQL() {
         FoodListAsync fla = new FoodListAsync();
         fla.execute();
-/*        foodArrayList.clear();
-        cursor = foodDatabaseHelper.getRecords();
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                Log.i(foodList_className, "SQL MESSAGE: "
-                        + cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_FOOD_NAME)));
-                foodArrayList.add(new FoodTransferObject(cursor.getInt(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_FOOD_NAME)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_SERVINGS)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_CALORIES)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_FAT)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_CARBOHYDRATE)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_DATE)),
-                        cursor.getString(cursor.getColumnIndex(foodDatabaseHelper.COLUMN_TIME))));
-                cursor.moveToNext();
-            }
-        }
-
-        Collections.sort(foodArrayList);
-        foodListAdapter.notifyDataSetChanged();*/
-
     }
 
+    /**
+     * Closes the database
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         foodDatabaseHelper.closeDatabase();
     }
 
-    //Create Facebook custom dialog
+    /**
+     * Creates Facebook custom dialog
+     */
     public void onCreateFacebookDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -267,7 +284,7 @@ public class FoodList extends Activity {
         dialogBuilder.setView(dialogView);
 
         final EditText comment = (EditText) dialogView.findViewById(R.id.dialog_comment);
-        // Add the buttons
+        // Add positive and negative buttons
         dialogBuilder.setPositiveButton(R.string.food_Dialog_share, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked Share button
@@ -286,7 +303,9 @@ public class FoodList extends Activity {
         dialog.show();
     }
 
-    //Create Google+ custom dialog
+    /**
+     * Creates Google+ custom dialog
+     */
     public void onCreateGoogleDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -313,7 +332,9 @@ public class FoodList extends Activity {
         dialog.show();
     }
 
-    //Create Twitter custom dialog
+    /**
+     * Creates Twitter custom dialog
+     */
     public void onCreateTwitterDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -340,7 +361,9 @@ public class FoodList extends Activity {
         dialog.show();
     }
 
-    //Create Help custom dialog
+    /**
+     * Creates Help custom dialog
+     */
     public void onCreateHelpDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -357,9 +380,10 @@ public class FoodList extends Activity {
         dialog.show();
     }
 
-
-
-
+    /**
+     * AsyncTask for reading data from database
+     * Performs background operations and publish results on the UI thread without having to manipulate threads and/or handlers
+     */
     public class FoodListAsync extends AsyncTask<String, Integer, String> {
 
         private ArrayList<FoodTransferObject> tempArrayList;
@@ -391,10 +415,7 @@ public class FoodList extends Activity {
                                 + (i + 1) + ". " + cursor.getColumnName(i));
                     }
                 }
-
-
             }
-
             catch (Exception e) {
                 Log.e("TEST", e.getMessage());
             }
@@ -402,18 +423,31 @@ public class FoodList extends Activity {
             return null;
         }
 
+        /**
+         * Before execute
+         */
         @Override
         protected void onPreExecute() {
             foodArrayList.clear();
         }
 
+        /**
+         * Displays the progress in the user interface while the background computation is still executing
+         *
+         * @param value the value
+         */
         @Override
         protected void onProgressUpdate(Integer ... value){
             progressBar.setVisibility(View.VISIBLE);
             progressBar.setProgress(value[0]);
-
         }
 
+        /**
+         * Invoked on the UI thread after the background computation finishes
+         * Sorts the food ListView by date
+         *
+         * @param result the result of the background computation
+         */
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.INVISIBLE);
@@ -421,13 +455,6 @@ public class FoodList extends Activity {
             Collections.sort(foodArrayList);
             foodListAdapter.notifyDataSetChanged();
         }
-
-
     }
-
-
-
-
-
 
 }
