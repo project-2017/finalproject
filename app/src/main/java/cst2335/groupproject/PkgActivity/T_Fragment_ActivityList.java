@@ -321,7 +321,7 @@ public class T_Fragment_ActivityList extends Fragment {
                     FragmentTransaction fragmentTransaction =
                             getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.container, fragment);
-                    fragmentTransaction.addToBackStack( "tag" ).commit();
+                    fragmentTransaction.commit();
                 }
 
             }
@@ -342,7 +342,7 @@ public class T_Fragment_ActivityList extends Fragment {
                     FragmentTransaction fragmentTransaction =
                             getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.container, fragment);
-                    fragmentTransaction.addToBackStack( "tag" ).commit();
+                    fragmentTransaction.commit();
                 }
 
             }
