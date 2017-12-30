@@ -2,17 +2,30 @@ package cst2335.groupproject.PkgHouse.homeThermo_mainPkg.fragmentTempPkg;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 
 import cst2335.groupproject.R;
 
 
 //public class FragmentMainActivity extends FragmentActivity {
 public class FragmentMainActivity extends Activity {
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.temp_fragment_main);
+
+//        if(getResources().getConfiguration().orientation){
+//            finish();
+//        }
 
         Fragment editFragment = new Fragment_editTemp();
 

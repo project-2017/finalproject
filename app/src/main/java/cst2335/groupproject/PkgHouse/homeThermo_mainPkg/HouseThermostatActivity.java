@@ -1,6 +1,8 @@
 package cst2335.groupproject.PkgHouse.homeThermo_mainPkg;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -25,6 +27,7 @@ import cst2335.groupproject.PkgHouse.DTO.DTO_TemperatureSetting;
 import cst2335.groupproject.PkgHouse.adapterPkg.HelpActivity;
 import cst2335.groupproject.PkgHouse.adapterPkg.TempSetting_Adapter;
 import cst2335.groupproject.PkgHouse.homeThermo_mainPkg.fragmentTempPkg.FragmentMainActivity;
+import cst2335.groupproject.PkgHouse.homeThermo_mainPkg.fragmentTempPkg.Fragment_editTemp;
 import cst2335.groupproject.R;
 
 import java.io.Serializable;
@@ -152,15 +155,29 @@ public class HouseThermostatActivity extends Activity {
 
                 picked_obj.setTemp(listTemperature.get(picked_obj.getTimeOfWeek()));
 
-                Intent intent = new Intent(HouseThermostatActivity.this, FragmentMainActivity.class);
+                if (findViewById(R.id.container) == null) {
+                    Intent intent = new Intent(HouseThermostatActivity.this, FragmentMainActivity.class);
 
-                // sent data to fragment
-                intent.putExtra("newItem_time", picked_obj.getTimeOfWeek());
-                intent.putExtra("newItem_temp", picked_obj.getTemp());
-                //--------pass the current treelist to add
-                intent.putExtra("treeMap", listTemperature);
+                    // sent data to fragment
+                    intent.putExtra("newItem_time", picked_obj.getTimeOfWeek());
+                    intent.putExtra("newItem_temp", picked_obj.getTemp());
+                    //--------pass the current treelist to add
+                    intent.putExtra("treeMap", listTemperature);
 //                startActivity(intent);
-                startActivityForResult(intent, EDIT_TEMP_REQUEST_CODE);
+                    startActivityForResult(intent, EDIT_TEMP_REQUEST_CODE);
+                }else{
+                    Fragment fragment = new Fragment_editTemp();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("newItem_time", picked_obj.getTimeOfWeek());
+                    bundle.putDouble("newItem_temp", picked_obj.getTemp());
+                    bundle.putSerializable("treeMap", listTemperature);
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    fragmentTransaction.commit();
+                }
+
             }
         });
 
@@ -168,6 +185,7 @@ public class HouseThermostatActivity extends Activity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (findViewById(R.id.container) == null) {
                 Intent intent = new Intent(HouseThermostatActivity.this, AddNewTempActivity.class);
 
                 //--------pass the current treelist to add
@@ -177,6 +195,16 @@ public class HouseThermostatActivity extends Activity {
 //                System.out.println(" test treemap " + test.size());
 //                startActivity(intent);
                 startActivityForResult(intent, ADD_TEMP_REQUEST_CODE);
+                }else{
+                    Fragment fragment = new Fragment_editTemp();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("treeMap", listTemperature);
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    fragmentTransaction.commit();
+                }
             }
         });
 
@@ -203,6 +231,17 @@ public class HouseThermostatActivity extends Activity {
 
     }// end  method
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (findViewById(R.id.container) != null) {
+            if(getFragmentManager().findFragmentById(R.id.container)!=null){
+                closeSideBar();
+            }
+        }
+    }
+
     private void changeDatabase(int time, double temp){
         DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
         newTemp.setTemp(temp);
@@ -213,6 +252,31 @@ public class HouseThermostatActivity extends Activity {
         }else{
             databaseHelper.insert(time, newTemp.toString());
         }
+        listTemperature.put(time,temp);
+    }
+
+
+    public void closeSideBar() {
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.container)).commit();
+    }
+
+    public void Change(TreeMap treeMap, int time, double temp) {
+        closeSideBar();
+        listTemperature = new TreeMap<>((Map<Integer, Double>) treeMap);
+        int time_return = time;
+        double temp_return = temp;
+        changeDatabase(time_return,temp_return);
+        Toast.makeText(getApplicationContext(), "New Temperature rule is added: \n" + (new DTO_TemperatureSetting(time_return, temp_return)).toString(), Toast.LENGTH_LONG)
+                .show();
+        updateListView_toolbar();
+    }
+
+    public void delete(int time, double temp){
+        closeSideBar();
+        listTemperature.remove(time);
+        databaseHelper.delete(time);
+        showSnackBar(time, temp);
+        updateListView_toolbar();
     }
 
     @Override

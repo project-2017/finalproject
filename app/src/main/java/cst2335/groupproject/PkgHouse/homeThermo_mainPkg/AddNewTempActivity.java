@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,11 @@ public class AddNewTempActivity extends Activity {
 
     private TreeMap<Integer, Double> listTemp;
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

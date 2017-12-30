@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import cst2335.groupproject.PkgHouse.DTO.DTO_TemperatureSetting;
+import cst2335.groupproject.PkgHouse.homeThermo_mainPkg.HouseThermostatActivity;
 import cst2335.groupproject.R;
 
 import java.util.Map;
@@ -91,6 +92,7 @@ public class Fragment_editTemp extends Fragment {
 //        numberPicker_min.setMinValue(0);
 //        numberPicker_min.setMaxValue(59);
 
+
         button_save = myView.findViewById(R.id.button_save_fg_h);
         button_cancel = myView.findViewById(R.id.button_cancel_fg_h);
 
@@ -102,9 +104,18 @@ public class Fragment_editTemp extends Fragment {
         final EditText temp_editText = myView.findViewById(R.id.temperature_fg_h);
 
         //-------------get the data from main fragment
-        listTemp = new TreeMap<>((Map<Integer, Double>) getActivity().getIntent().getExtras().get("treeMap"));
-        time_msg = getActivity().getIntent().getIntExtra("newItem_time", 0);
-        temperature_msg = getActivity().getIntent().getDoubleExtra("newItem_temp", -900);
+
+        Log.i("ActivityName",getActivity().getLocalClassName());
+        if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
+            listTemp = new TreeMap<>((Map<Integer, Double>) getArguments().getSerializable("treeMap"));
+            time_msg = getArguments().getInt("newItem_time");
+            temperature_msg = getArguments().getDouble("newItem_temp");
+        }else {
+            listTemp = new TreeMap<>((Map<Integer, Double>) getActivity().getIntent().getExtras().get("treeMap"));
+            time_msg = getActivity().getIntent().getIntExtra("newItem_time", 0);
+            temperature_msg = getActivity().getIntent().getDoubleExtra("newItem_temp", -900);
+        }
+
 
 
         String str = (new DTO_TemperatureSetting(time_msg, temperature_msg)).toString();
@@ -124,13 +135,17 @@ public class Fragment_editTemp extends Fragment {
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("newItem_time", time_msg);
-                resultIntent.putExtra("newItem_temp", temperature_msg);
+                if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
+                    ((HouseThermostatActivity) getActivity()).closeSideBar();
+                }else {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("newItem_time", time_msg);
+                    resultIntent.putExtra("newItem_temp", temperature_msg);
 
 
-                getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
-                getActivity().finish();
+                    getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
+                    getActivity().finish();
+                }
             }
         });
 
@@ -138,15 +153,20 @@ public class Fragment_editTemp extends Fragment {
 
             @Override
             public void onClick(View view) {
-//                time_msg = getActivity().getIntent().getIntExtra("newItem_time", 0);
+                if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
+                    ((HouseThermostatActivity) getActivity()).delete(time_msg,temperature_msg);
+                }else {
+                    //                time_msg = getActivity().getIntent().getIntExtra("newItem_time", 0);
 //                temperature_msg = getActivity().getIntent().getDoubleExtra("newItem_temp", -900);
 
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("newItem_time", time_msg);
-                resultIntent.putExtra("newItem_temp", temperature_msg);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("newItem_time", time_msg);
+                    resultIntent.putExtra("newItem_temp", temperature_msg);
 
-                getActivity().setResult(DELETE_ITEM, resultIntent);
-                getActivity().finish();
+                    getActivity().setResult(DELETE_ITEM, resultIntent);
+                    getActivity().finish();
+                }
+
             }
         });
 
@@ -188,7 +208,7 @@ public class Fragment_editTemp extends Fragment {
                     // 1. over write
                     // 2. cancel; restart
 
-                    AlertDialog.Builder dialogListener = new AlertDialog.Builder(getActivity().getApplicationContext());
+                    AlertDialog.Builder dialogListener = new AlertDialog.Builder(getActivity());
                     dialogListener.setTitle(R.string.title_addNew_h);
                     dialogListener.setMessage(R.string.timeExist_overwriteQuestion_h);
                     dialogListener.setPositiveButton(R.string.OK_h, new DialogInterface.OnClickListener() {
@@ -223,24 +243,28 @@ public class Fragment_editTemp extends Fragment {
     }
 
     private void addNewTempItem_exit(DTO_TemperatureSetting newTemp) {
-        listTemp.put(newTemp.getTimeOfWeek(), newTemp.getTemp());
-        //--------pass the current treelist to add
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("treeMap", listTemp);
+        if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
+            ((HouseThermostatActivity) getActivity()).Change(listTemp,newTemp.getTimeOfWeek(),newTemp.getTemp());
+        }else{
+            listTemp.put(newTemp.getTimeOfWeek(), newTemp.getTemp());
+            //--------pass the current treelist to add
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("treeMap", listTemp);
 
-        resultIntent.putExtra("newItem_time", newTemp.getTimeOfWeek());
-        resultIntent.putExtra("newItem_temp", newTemp.getTemp());
-        //-------------------
-        getActivity().setResult(Activity.RESULT_OK, resultIntent);
+            resultIntent.putExtra("newItem_time", newTemp.getTimeOfWeek());
+            resultIntent.putExtra("newItem_temp", newTemp.getTemp());
+            //-------------------
+            getActivity().setResult(Activity.RESULT_OK, resultIntent);
 
-        //display for testing
-        for (Map.Entry<Integer, Double> entry : listTemp.entrySet()) {
-            Integer time_key = entry.getKey();
-            Double temp = entry.getValue();
-            DTO_TemperatureSetting dto = new DTO_TemperatureSetting(time_key, temp);
-            Log.i("list temp", "click the save button - added treeMap " + dto.toString());
+            //display for testing
+            for (Map.Entry<Integer, Double> entry : listTemp.entrySet()) {
+                Integer time_key = entry.getKey();
+                Double temp = entry.getValue();
+                DTO_TemperatureSetting dto = new DTO_TemperatureSetting(time_key, temp);
+                Log.i("list temp", "click the save button - added treeMap " + dto.toString());
+            }
+            getActivity().finish();
         }
-        getActivity().finish();
     }
 
     private void deleteTempItem_exit(DTO_TemperatureSetting newTemp) {
