@@ -126,4 +126,68 @@
     <string name="food_Snackbar_facebookMessage">已成功分享到脸书。</string>
     <string name="food_Snackbar_googleMessage">已成功分享到谷歌+。</string>
     <string name="food_Snackbar_twitterMessage">已成功分享到推特。</string>
+
+    <!--Start of Hao LIU-->
+
+    <string name="SUNDAY">星期日</string>
+    <string name="MONDAY">星期一</string>
+    <string name="TUESDAY">星期二</string>
+    <string name="WEDNESDAY">星期三</string>
+    <string name="THURSDAY">星期四</string>
+    <string name="FRIDAY">星期五</string>
+    <string name="SATURDAY">星期六</string>
+
+    //-------------
+
+    <string name="OK_h">确认</string>
+    <string name="CANCEL_h">取消</string>
+    <string name="timeExist_overwriteQuestion_h">温度规则存在，取代规则？</string>
+    <string name="timeExist_deleteQuestion_h">删除温度规则？</string>
+
+    //-----------------add new temp settings
+    <string name="title_addNew_h">添加新的温度规则</string>
+    <string name="title_delete_h">删除温度规则</string>
+
+    <string name="setDayofWeekString_h">设置星期几</string>
+    <string name="setTempString_h">设定温度</string>
+    <string name="setHourString_h">设置小时</string>
+    <string name="setMinString_h">设置分钟</string>
+    <string name="saveString_h">保存</string>
+    <string name="deleteString_h">删除这个温度规则</string>
+    <string name="cancelString_h">取消</string>
+    <string name="saveAsNewRuleString_h">保存为新规则</string>
+
+    <string name="tempRule_selected_String_h">你选择温度规则： </string>
+
+    //--------------------
+
+    <string name="AboutInfor_h">关于</string>
+
+    <string name="Instruction_h">说明</string>
+
+    <string name="helpText_stringHTML_About_h">
+            <![CDATA[
+<p><strong>作者：</strong>Hao LIU (Michael),学号040892975 House</p>
+<p><strong>温控器版本号：</strong>v1.0</p>
+<p><strong>简要说明：</strong></p>
+<p>用户可以设置恒温器的时间表。</p>
+<p>用户可以根据设置温度的日期和时间设置温度的规则。</p>
+<p>时间表显示在一个ListView中。</p>
+<p>点击列表中的项目应显示温度规则的细节，让用户编辑规则并保存。</p>
+<p>用户可以编辑规则，并&ldquo;保存为新规则&rdquo;，而不是更改选定的规则。</p>
+<p>用户也可以编辑当前的规则并将其保存在当前的计划列表中。</p>
+            ]]>
+
+    </string>
+
+    <string name="helpText_stringHTML_Instruction_h">
+            <![CDATA[
+<p><strong>垂直视图：</strong></p>
+<p>有3个主要的GUI窗口。 显示恒温器时间表的主要活动窗口。 用户可以按ADD浮动按钮在主窗口上激活添加活动窗口。 在列表中添加了至少一个时间表后，用户可以按列出的任何时间表来激活编辑/删除窗口。 添加活动窗口，将从用户采取新的设置。 编辑/删除活动窗口将修改，删除或添加新的规则到当前的时间表。</p>
+<p><br /> <strong>水平视图：</strong></p>
+<p>只有一个主要的GUI窗口。主活动窗口的左半部分显示恒温器的时间表。而2个分片界面将共享主活动窗口的右侧。 当用户按下添加按钮，添加新的计划片段界面将显示在右侧。用户可以在这个界面上操作添加一个新的时间表。 当用户按下列出的任何一个时间表时，编辑/删除活动窗口将取代主活动窗口的右侧。用户可以按照选定的时间表进行操作，如修改，删除或保存为新规则。</p>
+            ]]>
+
+
+    </string>
 </resources>

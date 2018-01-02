@@ -34,13 +34,19 @@
             android:theme="@style/FoodAppTheme"/>
         <activity android:name=".PkgFood.FoodAdd"
             android:theme="@style/FoodAppTheme"/>
-        <activity android:name=".PkgFood.FoodUpdate000000"
-            android:theme="@style/FoodAppTheme"/>
         <activity android:name=".PkgFood.FoodUpdateDetails"
             android:theme="@style/FoodAppTheme"/>
         <activity android:name=".PkgFood.FoodDashboard"
             android:label="@string/food_Dashboard_titleBar"
             android:theme="@style/FoodAppTheme" />
+        <activity
+            android:name=".PkgHouse.homeThermo_mainPkg.AddNewTempActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".PkgHouse.homeThermo_mainPkg.fragmentTempPkg.FragmentMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".PkgHouse.adapterPkg.HelpActivity"></activity>
+        <activity android:name=".PkgHouse.homeThermo_mainPkg.HouseThermostatActivity" />
     </application>
 
 </manifest>

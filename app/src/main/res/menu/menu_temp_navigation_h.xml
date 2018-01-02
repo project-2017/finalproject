@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group
+        android:checkableBehavior="single"
+        android:enabled="true">
+        <!--app:showAsAction="always"-->
+        <item
+            android:id="@+id/nav_about_h"
+
+            android:title="@string/AboutInfor_h"
+            />
+
+        <item
+            android:id="@+id/nav_Instruction_h"
+            android:title="@string/Instruction_h"
+            />
+
+
+    </group>
+
+</menu>
