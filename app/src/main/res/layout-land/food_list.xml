@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appBackground">
+
+    <!--Top: Title bar with cross button and dashboard button-->
+    <LinearLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/titleBar"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:text="@string/food_List_listViewTitleBar"
+            android:textColor="@color/whiteText"
+            android:textSize="28sp" />
+
+        <ImageView
+            android:id="@+id/buttonAdd"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_food_white_plus_circle" />
+
+        <ImageView
+            android:id="@+id/buttonDashboard"
+            android:layout_width="28dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_food_statistic" />
+
+    </LinearLayout>
+
+    <!--Center: Food item ListView-->
+    <RelativeLayout
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/titleBar"
+        android:layout_above="@+id/bottomButtons">
+
+        <ListView
+            android:id="@+id/foodListView"
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:divider="#ff552d"
+            android:dividerHeight="1sp" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/foodListView" />
+
+    </RelativeLayout>
+
+
+    <!--Progress bar-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:visibility="invisible"
+            style="?android:attr/progressBarStyleHorizontal"/>
+
+    </LinearLayout>
+
+    <!--Bottom: Social media and Help buttons-->
+    <LinearLayout
+        android:id="@+id/bottomButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/food_List_shareButtonText"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"/>
+
+        <ImageView
+            android:id="@+id/facebook"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_food_facebook" />
+
+        <ImageView
+            android:id="@+id/google"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_food_google" />
+
+        <ImageView
+            android:id="@+id/twitter"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_food_twitter" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/food_List_helpButtonText"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"/>
+
+
+        <ImageView
+            android:id="@+id/help"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_food_help" />
+    </LinearLayout>
+
+</RelativeLayout>
+
+

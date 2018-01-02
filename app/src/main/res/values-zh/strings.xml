@@ -69,4 +69,61 @@
     <string name="tracker_dashboard_thisMonthTime">本月锻炼总时间 (分钟)</string>
     <string name="tracker_dashboard_lastMonthTime">上月锻炼总时间 (分钟)</string>
     <string name="tracker_help_title">帮助</string>
+
+    <!--Food Nutrition Info Activity string bundle-->
+    <string name="food_item_foodName">食物名称:</string>
+    <string name="food_item_servings">份量:</string>
+    <string name="food_item_calories">卡路里:</string>
+    <string name="food_item_fat">脂肪:</string>
+    <string name="food_item_carbohydrate">碳水化合物:</string>
+    <string name="food_item_date">日期:</string>
+    <string name="food_item_time">时间:</string>
+
+    <string name="food_List_listViewTitleBar">食物列表</string>
+    <string name="food_List_shareButtonText">分享:</string>
+    <string name="food_List_helpButtonText">帮助:</string>
+    <string name="food_Add_addTitleBar">你吃过的食物?</string>
+    <string name="food_Add_empty_warning">请填全所有信息。</string>
+    <string name="food_Add_serving_warning">份量数须大于0。</string>
+    <string name="food_Add_addButton">添加</string>
+    <string name="food_Add_infoAddSuccessful">信息添加成功。</string>
+    <string name="food_Add_infoAddUnsuccessful">添加信息失败。</string>
+    <string name="food_Update_updateTitleBar">更新食物信息</string>
+    <string name="food_Update_updateButton">更新</string>
+    <string name="food_Update_deleteButton">删除</string>
+    <string name="food_Dashboard_titleBar">卡路里概要</string>
+    <string name="food_Dashboard_text1">昨天</string>
+    <string name="food_Dashboard_text2">平均每一天</string>
+    <string name="food_Dashboard_max">卡路里目标：&#160;3000</string>
+    <string name="food_Dashboard_totalDays">总天数：</string>
+    <string name="food_Dashboard_totalCalories">总卡路里：</string>
+    <string name="food_Dashboard_toolbar_one">作者</string>
+    <string name="food_Dashboard_toolbar_two">版本</string>
+    <string name="food_Dashboard_toolbar_three">帮助</string>
+    <string name="food_Dashboard_toolbar_one_message">作者：沈湛， 版本：v1.0.0</string>
+
+
+    <string name="food_Dialog_title_facebook">分享到脸书</string>
+    <string name="food_Dialog_title_google">分享到谷歌+</string>
+    <string name="food_Dialog_title_twitter">分享到推特</string>
+    <string name="food_Dialog_title_help">帮助</string>
+    <string name="food_Dialog_comment">分享评论</string>
+    <string name="food_Dialog_share">分享</string>
+    <string name="food_Dialog_cancel">取消</string>
+    <string name="food_Dialog_exit">退出</string>
+    <string name="food_Dialog_deleteMessage">你确认要删除吗？</string>
+    <string name="food_Dialog_delete">删除</string>
+    <string name="food_Dialog_help_author">作者:</string>
+    <string name="food_Dialog_help_author_name">沈湛</string>
+    <string name="food_Dialog_help_version">版本:</string>
+    <string name="food_Dialog_help_version_number">v1.0.0</string>
+    <string name="food_Dialog_help_guide">用户指南:</string>
+    <string name="food_Dialog_help_guide_add">添加一条新记录</string>
+    <string name="food_Dialog_help_guide_statistic">查看卡路里概要信息</string>
+    <string name="food_Dialog_help_guide_arrow">编辑或删除已选记录</string>
+    <string name="food_Dialog_help_guide_social">分享到社交媒体</string>
+
+    <string name="food_Snackbar_facebookMessage">已成功分享到脸书。</string>
+    <string name="food_Snackbar_googleMessage">已成功分享到谷歌+。</string>
+    <string name="food_Snackbar_twitterMessage">已成功分享到推特。</string>
 </resources>

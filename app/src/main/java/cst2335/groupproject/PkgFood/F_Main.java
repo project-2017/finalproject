@@ -4,6 +4,7 @@ package cst2335.groupproject.PkgFood;
  * This class is used for creating the main GUI of food information tracker
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,9 @@ public class F_Main extends Fragment {
 
         // Set current layout
         sharedPreference.setLayout(view.getContext(), "F_Main");
+
+        Intent intent = new Intent(view.getContext(), FoodList.class);
+        startActivity(intent);
 
         return view;
     }

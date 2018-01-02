@@ -56,4 +56,11 @@
         <item name="android:textColor">@color/trackerWhite</item>
     </style>
 
+    <style name="FoodAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/titleBar</item>
+        <item name="colorPrimaryDark">@color/top_status_bar</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>
