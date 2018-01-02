@@ -17,47 +17,55 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import cst2335.groupproject.PkgHouse.DTO.DTO_TemperatureSetting;
 import cst2335.groupproject.PkgHouse.homeThermo_mainPkg.HouseThermostatActivity;
 import cst2335.groupproject.R;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 /**
  * Created by H.LIU on 2017-11-12.
+ *
+ *  the fragment to handle editing the temperature settings
  */
 
 public class Fragment_editTemp extends Fragment {
-    private Button button_save;
-    private Button button_cancel;
-    private Button button_newRule;
-    private Button button_delete;
+    private Button button_save; // not used hiden from the user; future improvement
+    private Button button_cancel; // go back to main page
+    private Button button_newRule; // save as the new rule
+    private Button button_delete; // delete
 
 
     //    private NumberPicker numberPicker_hour;
-//    private NumberPicker numberPicker_min;
-    private TimePicker timePicker;
-
-    private Spinner spinner_day;
-    private double temperature;
+    private TimePicker timePicker; // pick time
+    private Spinner spinner_day; // day of week
+    private double temperature; // hole the user input of the temperature
 
     private final double default_temp = 20.0;
-    private DTO_TemperatureSetting newTemp;
+    private DTO_TemperatureSetting newTemp; // DTO
 
 
-    private TreeMap<Integer, Double> listTemp;
-    private int time_msg;
-    private double temperature_msg;
+    private TreeMap<Integer, Double> listTemp; // tree map to hold the temperature settings
 
-    private View myView;
+    private int time_msg; // valuse passed from/to main activity
+    private double temperature_msg; // valuse passed from/to main activity
 
-    private static final int DELETE_ITEM = 20;
+    private View myView; // view from the main activity
+
+    private static final int DELETE_ITEM = 20; // valuse passed from/to main activity code
 
     //--------------------------------------------
     public Fragment_editTemp() {
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -103,27 +111,30 @@ public class Fragment_editTemp extends Fragment {
         spinner_day = myView.findViewById(R.id.spinner_fg_h);
         final EditText temp_editText = myView.findViewById(R.id.temperature_fg_h);
 
-        //-------------get the data from main fragment
+        //-------------get the data from main fragment - phone mode with vertical
 
         Log.i("ActivityName",getActivity().getLocalClassName());
+        //horizential mode; the main activity is the main activity;
         if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
             listTemp = new TreeMap<>((Map<Integer, Double>) getArguments().getSerializable("treeMap"));
             time_msg = getArguments().getInt("newItem_time");
             temperature_msg = getArguments().getDouble("newItem_temp");
         }else {
+            // the vertical mode; the main activity is the FragmentMainActivity;
             listTemp = new TreeMap<>((Map<Integer, Double>) getActivity().getIntent().getExtras().get("treeMap"));
             time_msg = getActivity().getIntent().getIntExtra("newItem_time", 0);
             temperature_msg = getActivity().getIntent().getDoubleExtra("newItem_temp", -900);
         }
 
 
-
+        // display to the head which setting is picked by user;
+        // str is the tostring from DTO
         String str = (new DTO_TemperatureSetting(time_msg, temperature_msg)).toString();
-
         TextView title = myView.findViewById(R.id.stringText_mainfragement_title);
 //        str = R.string.tempRule_selected_String_h + str;
         title.setText(str);
 
+        //if the listTemp is null; new list is created
         if (listTemp == null) {
             listTemp = new TreeMap<>();
         } else {
@@ -132,6 +143,10 @@ public class Fragment_editTemp extends Fragment {
 
         //-------------------------------------------
 
+        /**
+         * 2 cases; vertical mode or the horizental mode
+         *
+         */
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,11 +164,16 @@ public class Fragment_editTemp extends Fragment {
             }
         });
 
+        /**
+         * 2 cases; vertical mode or the horizental mode
+         *
+         */
         button_delete.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
+                    // find the main activity and call the function in the main activity
                     ((HouseThermostatActivity) getActivity()).delete(time_msg,temperature_msg);
                 }else {
                     //                time_msg = getActivity().getIntent().getIntExtra("newItem_time", 0);
@@ -170,6 +190,10 @@ public class Fragment_editTemp extends Fragment {
             }
         });
 
+        /**
+         * 2 cases; vertical mode or the horizental mode
+         *
+         */
         button_newRule.setOnClickListener(new View.OnClickListener() {
 //        button_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,16 +201,20 @@ public class Fragment_editTemp extends Fragment {
                 String day;
                 int hourInput, minInput;
 
+                /*
+                 get the user input
+                  */
                 day = spinner_day.getSelectedItem().toString();
 //                Log.i("list temp", "click the save button " + day );
-
-//                hourInput = numberPicker_hour.getValue();
 //                minInput = numberPicker_min.getValue();
                 hourInput = timePicker.getCurrentHour();
                 minInput = timePicker.getCurrentMinute();
 
 //                Log.i("list temp", "click the save button " + hourInput + " " + minInput);
 
+                /*
+                if no value entered, take 20 degree as the default value
+                 */
                 String s = temp_editText.getText().toString();
                 s = s.trim();
                 if ((!s.equals(""))) {
@@ -195,19 +223,16 @@ public class Fragment_editTemp extends Fragment {
                     temperature = default_temp;
                 }
 //                Log.i("list temp", "click the save button " + temperature);
-
 //                DTO_TemperatureSetting newTemp = new DTO_TemperatureSetting();
-                // check if the time exist
 
-
+                /*
+                check if the time exist, if yes, ask user to confirm the changes
+                 */
                 newTemp = new DTO_TemperatureSetting(day, hourInput, minInput, temperature);
 //                Log.i("list temp", "click the save button " + newTemp.toString());
 
                 // time rule exists
                 if (listTemp.get(newTemp.getTimeOfWeek()) != null) {
-                    // 1. over write
-                    // 2. cancel; restart
-
                     AlertDialog.Builder dialogListener = new AlertDialog.Builder(getActivity());
                     dialogListener.setTitle(R.string.title_addNew_h);
                     dialogListener.setMessage(R.string.timeExist_overwriteQuestion_h);
@@ -224,6 +249,9 @@ public class Fragment_editTemp extends Fragment {
                     dialogListener.show();
 
                 } else {
+                    /*
+                    2 cases; vertical mode or the horizental mode
+                     */
                     addNewTempItem_exit(newTemp);
                 }
 
@@ -242,8 +270,16 @@ public class Fragment_editTemp extends Fragment {
         });
     }
 
+    /**
+     * 2 cases; vertical mode or the horizental mode
+     *
+     * @param newTemp
+     */
     private void addNewTempItem_exit(DTO_TemperatureSetting newTemp) {
         if(getActivity().getLocalClassName().equals("PkgHouse.homeThermo_mainPkg.HouseThermostatActivity")){
+            /*
+            horizontal mode
+             */
             ((HouseThermostatActivity) getActivity()).Change(listTemp,newTemp.getTimeOfWeek(),newTemp.getTemp());
         }else{
             listTemp.put(newTemp.getTimeOfWeek(), newTemp.getTemp());
@@ -267,6 +303,10 @@ public class Fragment_editTemp extends Fragment {
         }
     }
 
+    /**
+     * the vertical mode; delete the item user selected;
+     * @param newTemp
+     */
     private void deleteTempItem_exit(DTO_TemperatureSetting newTemp) {
 
 //        listTemp.put(newTemp.getTimeOfWeek(), newTemp.getTemp());
@@ -278,7 +318,6 @@ public class Fragment_editTemp extends Fragment {
 
 //        listTemp.remove(newTemp.getTimeOfWeek());
 //        resultIntent.putExtra("treeMap", listTemp);
-
         //-------------------
 //        getActivity().setResult(Activity.RESULT_OK, resultIntent);
 
@@ -293,10 +332,5 @@ public class Fragment_editTemp extends Fragment {
         }
         getActivity().finish();
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 
 }

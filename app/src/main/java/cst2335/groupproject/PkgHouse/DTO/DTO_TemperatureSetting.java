@@ -2,7 +2,6 @@ package cst2335.groupproject.PkgHouse.DTO;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -14,15 +13,26 @@ import java.util.Locale;
 
 /**
  * Created by H.LIU on 2017-11-08.
+ * this class is used to hold the temperature settings. eg. day, time and tempertarue.
+ *
+ * the instances we care is the integer of the time of week, and double of the temperature settings.
+ *
+ * constructor will convert the string to int of time of week and double of temperature
+ * for this class in the proper format
+ *
+ * display and tostring will handle the informaiton display format;
+ * converting the string from English to chinese. chinese to english;
+ *
+ *
  */
 
 public class DTO_TemperatureSetting extends Activity implements Comparable, Serializable {
 
-    private String dayOfWeek;
-    private String timeOfDay;
+    private String dayOfWeek; // string for display only
+    private String timeOfDay; // string for display only
 
-    private int minOfWeek;
-    private double temp;
+    private int minOfWeek; // key instance information, the time of the week for each user settings
+    private double temp; // key instance inforamtion, the temperature settings for each users settings
 
     private static final int MIN_PER_DAY = 1440; //60min * 24 hrs
 
@@ -30,14 +40,31 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
 //    private String Mon = getResources().getString(R.string.MONDAY);
 //    private final String[] dayofWeek = getResources().getStringArray(R.array.stringArray_dayOfWeek_h);
 
+    /**
+     * default constructor
+     */
     public DTO_TemperatureSetting() {
     }
 
+    /**
+     * constructor
+     *
+     * @param minOfWeek the integer of time
+     * @param temp the double of the temperature settings
+     */
     public DTO_TemperatureSetting(int minOfWeek, double temp) {
         this.minOfWeek = minOfWeek;
         this.temp = temp;
     }
 
+    /**
+     *  converting the string to integer of the week time
+     *
+     * @param day string of week day
+     * @param hour int
+     * @param min int
+     * @param temp double
+     */
     public DTO_TemperatureSetting(String day, int hour, int min, double temp) {
         String Day_Hour_Min = String.format("%s %02d:%02d", day,hour,min);
 
@@ -51,6 +78,10 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
 //        System.out.println("new constructor with string and number input: " + this.toString());
     }
 
+    /**
+     * converting the string to the time of the week and the double of temperature setting
+     * @param day_time_temp string
+     */
     public DTO_TemperatureSetting(String day_time_temp) {
         String[] str = day_time_temp.split(" ");
         String day = str[0].trim();
@@ -89,6 +120,12 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
 
     //---------------------------
 
+    /**
+     * override equal for comparable; not used
+     *
+     * @param obj any object
+     * @return
+     */
     // can not set 2 setting at the same time
     @Override
     public boolean equals(Object obj) {
@@ -98,25 +135,40 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
         return false;
     }
 
+    /**
+     * override compareable; not used
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(@NonNull Object o) {
-        if (getTimeOfWeek() == minOfWeek)
+        if ( ((DTO_TemperatureSetting)o).getTimeOfWeek() == minOfWeek)
             return 0;
-        else if (getTimeOfWeek() > minOfWeek)
+        else if (((DTO_TemperatureSetting)o).getTimeOfWeek() > minOfWeek)
             return -1;
         else {
             return 1;
         }
     }
 
+    /**
+     * not used for hashcode
+     * @return
+     */
     @Override
     public int hashCode() {
         return getTimeOfWeek();
     }
 
+    /**
+     * display object information; with proper language
+     * @return
+     */
     @Override
     public String toString() {
         String temp = " Temp -> ";
+        // for chinese language output
         if(Locale.getDefault().getLanguage().equals("zh")){
             temp = " 温度 -> ";
         }
@@ -128,14 +180,57 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
 //                + "temp -> " + getTemp();
     }
 
+    /**
+     * display the time based on the language settings
+     *
+     * @param locale
+     * @return
+     */
     public String displayTime(Locale locale) {
         String day;
-
 
         int dayOfWeek = (minOfWeek / MIN_PER_DAY) ;
         int timeOfDay = minOfWeek % MIN_PER_DAY;
         int hour = timeOfDay / 60;
         int min = timeOfDay % 60;
+
+        if(Locale.getDefault().getLanguage().equals("zh")){
+            switch (dayOfWeek) {
+                case 1:
+                    day = "星期日";
+                    break;
+                case 2:
+                    day = "星期一";
+                    break;
+                case 3:
+                    day = "星期二";
+                    break;
+                case 4:
+                    day = "星期三";
+                    break;
+                case 5:
+                    day = "星期四";
+                    break;
+                case 6:
+                    day = "星期五";
+                    break;
+                case 7:
+                    day = "星期六";
+                    break;
+                default:
+                    day = " something is wrong week of day: " + dayOfWeek;
+            }
+
+
+
+            // set the display format with the language setting
+            String day_Hour_Min = String.format(locale,"%s %02d:%02d", day,hour,min);
+
+            // debugging code
+            System.out.println(" \n display time is " +  day_Hour_Min);
+            return day_Hour_Min;
+
+        }
 
         switch (dayOfWeek) {
             case 1:
@@ -163,13 +258,25 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
                 day = " something is wrong week of day: " + dayOfWeek;
         }
 
+
+
+        // set the display format with the language setting
         String day_Hour_Min = String.format(locale,"%s %02d:%02d", day,hour,min);
 
+        // debugging code
         System.out.println(" \n display time is " +  day_Hour_Min);
         return day_Hour_Min;
 
     }
 
+    /**
+     *  convert string time to int time of week;
+     *  language setting will be take care based on the input Locale
+     *
+     * @param Day_Hour_Min string with day, hour and minutes
+     * @param locale the language setting
+     * @return
+     */
     public int parseMinOfWeek(String Day_Hour_Min, Locale locale) {
         try {
             SimpleDateFormat dayFormat = new SimpleDateFormat("E HH:mm", locale);
@@ -190,6 +297,14 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
         }
     }
 
+    /**
+     * convert the int time of week to proper string
+     * Locale will take care of the language setting
+     *
+     * @param minOfweek
+     * @param locale
+     * @return
+     */
     public String getStringEEEE_HH_mm(int minOfweek, Locale locale) {
         setTimeOfWeek(minOfweek);
         String str_time = displayTime(locale);
@@ -210,6 +325,13 @@ public class DTO_TemperatureSetting extends Activity implements Comparable, Seri
 
     }
     //-----------------------------
+
+    /**
+     * standarded getters and setters
+     *
+     *
+     * @return
+     */
     public int getTimeOfWeek() {
         return minOfWeek;
     }

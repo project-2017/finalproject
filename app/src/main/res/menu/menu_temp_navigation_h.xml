@@ -9,13 +9,14 @@
         android:enabled="true">
         <!--app:showAsAction="always"-->
         <item
-            android:id="@+id/nav_addNew_h"
-            android:title="How to add new"
+            android:id="@+id/nav_about_h"
+
+            android:title="@string/AboutInfor_h"
             />
 
         <item
-            android:id="@+id/nav_delete_Undo_h"
-            android:title="How to delet existing /undo delete"
+            android:id="@+id/nav_Instruction_h"
+            android:title="@string/Instruction_h"
             />
 
 

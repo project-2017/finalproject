@@ -58,8 +58,10 @@
 
     </string-array>
 
+
+
     //---------------dialog listener add new Item
-    <!--<string name="OK">OK</string>-->
+
     <string name="OK_h">OK</string>
     <string name="CANCEL_h">CANCEL</string>
     <string name="timeExist_overwriteQuestion_h">The temperature rule exists, replace the rule?</string>
@@ -80,25 +82,54 @@
 
     <string name="tempRule_selected_String_h">You selected temperature rule: </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    &lt;!&ndash; TODO: Remove or change this placeholder text &ndash;&gt;
+    <string name="hello_blank_fragment">Hello blank fragment</string>-->
 
     //----------------write help-------
     <!--<emp> Help file for Add new rule </emp>-->
     <!--<br></br>-->
     <!--<h2> Help file for Add new rule </h2>-->
+    <string name="AboutInfor_h">About</string>
 
-    <string name="helpText_stringHTML_Add">
+    <string name="Instruction_h">Instruction</string>
+
+    <string name="helpText_stringHTML_About_h">
             <![CDATA[
-             <h1> Help file for Add new rule </h1>
-                <p>This is a html-formatted string with <b>bold</b> and <i>italic</i> text</p>
-                <p>This is another paragraph of the same string.</p>
+
+                <p><strong>Author:</strong> Hao LIU(Michael), student number 040892975</p>
+                <p><strong>House Thermostat version number:</strong> v1.0</p>
+                <p><strong>Brief Instructions:</strong></p>
+
+<p>1. Users are able to set a schedule for a thermostat.</p>
+<p>2. The user is able to set rules for the temperature based on which day and time to set the temperature.</p>
+<p>3. The schedule is displayed in a ListView. Clicking on an item from the list should show the details of the temperature rule, and let the user edit the rule and save it.</p>
+<p>4. The user is allowed to edit the rule, and &ldquo;save as new rule&rdquo; instead of changing the selected rule.&nbsp;</p>
+<p>5. The user is also allowed to edit the current rule and save it on the current schedule list.</p>
+
             ]]>
 
     </string>
 
-    <string name="helpText_stringHTML_delete">
-        Help file for delete old rule and undo
+    <string name="helpText_stringHTML_Instruction_h">
+            <![CDATA[
+
+<p><strong>Detailed Instructions:</strong></p>
+<p>There are 2 main GUI part for the House Thermostat activity, the vertical view, and horizontal view.</p>
+<p><strong>The vertical view:</strong></p>
+<p>There are 3 main GUI windows.</p>
+<p>The main activity window which displays a schedule for a thermostat.</p>
+<p>Users can press the ADD float button to on the main window to activate the add activity window.</p>
+<p>After at least one schedule is added to the list, users can press any listed schedule to activate the edit/delete window.</p>
+<p>The add activity window which will take new settings from the user.</p>
+<p>The edit/delete activity window which will modify, delete or add new rules to the current schedule.</p>
+<p><strong>The horizontal view:</strong></p>
+<p>There is only one main GUI window. The left half of the main activity window displays a schedule for a thermostat. And 2 fragments interface will share the right side of the main activity window.</p>
+<p>When users press the add button, the add new schedule fragment interface will show on the right side. The user can operate on this interface to add a new schedule.</p>
+<p>The edit/delete activity window will replace the right side of the main activity window when users press any of the listed schedules. The user can operate on this selected schedule, such as modify, delete or save as a new rule.</p>
+
+            ]]>
+
+
     </string>
 
     <!--End of Michael-->

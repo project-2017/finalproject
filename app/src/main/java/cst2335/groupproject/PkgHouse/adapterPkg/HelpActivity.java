@@ -8,10 +8,12 @@ import android.widget.Toast;
 
 import cst2335.groupproject.R;
 
-
+/**
+ * help file for the user to understand the activity
+ */
 public class HelpActivity extends Activity {
 
-    private String helpItem;
+    private String helpItem; // string to hold the information to display
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +27,13 @@ public class HelpActivity extends Activity {
         switch(helpItem){
             case "helpAdd":
 
-                textView_help.setText(Html.fromHtml (getString(R.string.helpText_stringHTML_Add)) );
+                textView_help.setText(Html.fromHtml (getString(R.string.helpText_stringHTML_About_h)) );
 
                 Toast.makeText(getApplicationContext(), "Navigation bar add Clicked!",
                         Toast.LENGTH_SHORT).show();
                 break;
             case "helpDelete":
-                textView_help.setText(Html.fromHtml(  getString(R.string.helpText_stringHTML_delete)));
+                textView_help.setText(Html.fromHtml(  getString(R.string.helpText_stringHTML_Instruction_h)));
                 Toast.makeText(getApplicationContext(), "Navigation bar delete Clicked!",
                         Toast.LENGTH_SHORT).show();
                 break;

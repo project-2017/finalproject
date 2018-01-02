@@ -16,6 +16,9 @@ import cst2335.groupproject.R;
 
 /**
  * Created by H.LIU on 2017-11-08.
+ *
+ * the view adaptor
+ * very standard
  */
 
 public class TempSetting_Adapter extends ArrayAdapter<String>{
@@ -32,7 +35,6 @@ public class TempSetting_Adapter extends ArrayAdapter<String>{
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-
     @Override
     public int getCount() {
         return arrayString_templist.size();
@@ -45,12 +47,19 @@ public class TempSetting_Adapter extends ArrayAdapter<String>{
 //        return arrayString_templist[position];
     }
 
-
 //    @Override
 //    public long getItemId(int position) {
 //        return arrayString_templist.get(position);
 //    }
 
+    /**
+     * set view
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 
 import cst2335.groupproject.R;
 
-
+/**
+ * the activity which hold the fragment for the phone vertical mode;
+ */
 //public class FragmentMainActivity extends FragmentActivity {
 public class FragmentMainActivity extends Activity {
 
