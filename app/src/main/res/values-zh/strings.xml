@@ -190,4 +190,45 @@
 
 
     </string>
+
+    <!--Auto activity-->
+    <string name="reminder">请输入下列数值： </string>
+    <string name="liters_a">输入购买的升数(L)： </string>
+    <string name="price_a">输入单价($)： </string>
+    <string name="km_a">输入里程数(KM)： </string>
+    <string name="recordTime_a">记录时间： </string>
+    <string name="edit_a">编辑记录</string>
+    <string name="save_a">保存纪录</string>
+    <string name="delete_a">删除记录</string>
+    <string name="update_a">更新记录</string>
+    <string name="liters_detail_a">升数(L): </string>
+    <string name="price_detail_a">单价($): </string>
+    <string name="km_detail_a">里程数(KM): </string>
+    <string name="average_a">上月购买的平均价格</string>
+    <string name="total_a">上月购买总额</string>
+    <string name="everymonth_a">每月购买总额</string>
+    <string name="add_a">添加购买记录</string>
+    <string name="jan_a">一月</string>
+    <string name="feb_a">二月</string>
+    <string name="mar_a">三月</string>
+    <string name="apr_a">四月</string>
+    <string name="may_a">五月</string>
+    <string name="jun_a">六月</string>
+    <string name="jul_a">七月</string>
+    <string name="aug_a">八月</string>
+    <string name="sep_a">九月</string>
+    <string name="oct_a">十月</string>
+    <string name="nov_a">十一月</string>
+    <string name="dec_a">十二月</string>
+    <string name="month_a">月份</string>
+    <string name="amount_a">数量</string>
+    <string name="help_a">帮助</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="title_a">车辆加油记录</string>
+    <string name="intro_a">此应用程序可以用来记录为爱车加油的一些数据。并可以计算上个月购买汽油的平均价格，以及上月购买汽油的总量。同时，还可以根据客户的选择，显示一年中每个月加油的数量。</string>
+    <string name="prompt">请输入你希望查询的年份： </string>
+    <string name="back">你想返回吗?</string>
+    <string name="version">版本1.0 作者杨斌</string>
+    <!--end of Auto-->
 </resources>

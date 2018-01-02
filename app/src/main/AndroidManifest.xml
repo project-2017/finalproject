@@ -21,22 +21,27 @@
         </activity>
         <activity
             android:name=".PkgActivity.T_Insert"
-            android:windowSoftInputMode="stateVisible"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".PkgActivity.T_Update"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".PkgActivity.T_Update"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".PkgActivity.T_Help"
-            android:label="@string/tracker_help_title"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
-        <activity android:name=".PkgFood.FoodList"
-            android:theme="@style/FoodAppTheme"/>
-        <activity android:name=".PkgFood.FoodAdd"
-            android:theme="@style/FoodAppTheme"/>
-        <activity android:name=".PkgFood.FoodUpdateDetails"
-            android:theme="@style/FoodAppTheme"/>
-        <activity android:name=".PkgFood.FoodDashboard"
+            android:label="@string/tracker_help_title"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".PkgFood.FoodList"
+            android:theme="@style/FoodAppTheme" />
+        <activity
+            android:name=".PkgFood.FoodAdd"
+            android:theme="@style/FoodAppTheme" />
+        <activity
+            android:name=".PkgFood.FoodUpdateDetails"
+            android:theme="@style/FoodAppTheme" />
+        <activity
+            android:name=".PkgFood.FoodDashboard"
             android:label="@string/food_Dashboard_titleBar"
             android:theme="@style/FoodAppTheme" />
         <activity
@@ -47,6 +52,14 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".PkgHouse.adapterPkg.HelpActivity"></activity>
         <activity android:name=".PkgHouse.homeThermo_mainPkg.HouseThermostatActivity" />
+        <!--automobilt-->
+        <activity
+            android:name=".PkgAutomobile.AutomobileActivity"
+            android:label="@string/title_a" />
+        <activity android:name=".PkgAutomobile.AutomobileDetail" />
+        <activity android:name=".PkgAutomobile.AutomobileEntry" />
+        <activity android:name=".PkgAutomobile.AutomobileMonthlypurchase"></activity>
+        <!--end of auto-->
     </application>
 
 </manifest>

@@ -147,7 +147,6 @@
     </string-array>
 
 
-
     //---------------dialog listener add new Item
 
     <string name="OK_h">OK</string>
@@ -214,4 +213,45 @@
 
 
     </string>
+
+    <!--Auto activity-->
+    <string name="reminder">Please enter the following data： </string>
+    <string name="liters_a">LITERS(L): </string>
+    <string name="price_a">UNIT PRICE($): </string>
+    <string name="km_a">KILOMETERS(KM): </string>
+    <string name="recordTime_a">Time Recorded： </string>
+    <string name="edit_a">EDIT</string>
+    <string name="save_a">SAVE NEW PURCHASE</string>
+    <string name="delete_a">DELETE</string>
+    <string name="update_a">UPDATE</string>
+    <string name="liters_detail_a">LITERS(L): </string>
+    <string name="price_detail_a">PRICE($): </string>
+    <string name="km_detail_a">KILOMETERS(KM): </string>
+    <string name="average_a">Calculate average price of last month</string>
+    <string name="total_a">Total amount purchased last month</string>
+    <string name="everymonth_a">Total amount purchased every month</string>
+    <string name="add_a">Add new purchase</string>
+    <string name="jan_a">JANUARY</string>
+    <string name="feb_a">FEBRUARY</string>
+    <string name="mar_a">MARCH</string>
+    <string name="apr_a">APRIL</string>
+    <string name="may_a">MAY</string>
+    <string name="jun_a">JUNE</string>
+    <string name="jul_a">JULY</string>
+    <string name="aug_a">AUGUST</string>
+    <string name="sep_a">SEPTEMBER</string>
+    <string name="oct_a">OCTOBER</string>
+    <string name="nov_a">NOVEMBER</string>
+    <string name="dec_a">DECEMBER</string>
+    <string name="month_a">MONTH</string>
+    <string name="amount_a">AMOUNT</string>
+    <string name="help_a">HELP</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="title_a">AUTOMOBILE</string>
+    <string name="intro_a">This app could be used to record your gas purchase for your car. Press "ADD NEW" button to add new purcahse. You can also calculate the average price and the total amount of gas your purchased last month by press the according button.</string>
+    <string name="prompt">Please enter the year: </string>
+    <string name="back">Do you want to go back?</string>
+    <string name="version">Version 1.0 by Bin Yang</string>
+    <!--end of Auto-->
 </resources>
