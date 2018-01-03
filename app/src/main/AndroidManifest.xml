@@ -13,11 +13,7 @@
             android:name=".PkgMain.M_MainPage"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".PkgActivity.T_Insert"
@@ -50,16 +46,28 @@
         <activity
             android:name=".PkgHouse.homeThermo_mainPkg.fragmentTempPkg.FragmentMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity android:name=".PkgHouse.adapterPkg.HelpActivity"></activity>
+        <activity android:name=".PkgHouse.adapterPkg.HelpActivity" />
         <activity android:name=".PkgHouse.homeThermo_mainPkg.HouseThermostatActivity" />
-        <!--automobilt-->
+        <!-- automobilt -->
         <activity
             android:name=".PkgAutomobile.AutomobileActivity"
-            android:label="@string/title_a" />
+            android:label="@string/title_a"
+            android:theme="@style/AutoAppTheme" />
         <activity android:name=".PkgAutomobile.AutomobileDetail" />
         <activity android:name=".PkgAutomobile.AutomobileEntry" />
-        <activity android:name=".PkgAutomobile.AutomobileMonthlypurchase"></activity>
-        <!--end of auto-->
+        <activity android:name=".PkgAutomobile.AutomobileMonthlypurchase" />
+        <!-- end of auto -->
+        <activity
+            android:name=".PkgMain.SplashScreenActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
     </application>
 
 </manifest>

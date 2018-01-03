@@ -15,4 +15,7 @@
     <color name="deleteButtonColor">#ff552d</color>
     <color name="listView_date_and_time">#777777</color>
     <color name="top_status_bar">#000000</color>
+
+    <!--Auto Activity color bundle-->
+    <color name="autoBoarderColor">#f9c87d</color>
 </resources>
